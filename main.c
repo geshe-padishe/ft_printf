@@ -1,27 +1,61 @@
+/* ************************************************************************** */ /*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/01 12:19:31 by nikotikch         #+#    #+#             */
+/*   Updated: 2020/12/01 20:24:55 by nikotikch        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "ft_printf.h"
 
-t_dynarray	*init_dynarray(uint64_t nb_cells, size_t cell_size)
+int	init_dynarray(t_dynarray *dynarray, uint64_t nb_cells, size_t cell_size)
 {
-  t_dynarray	*dynarray;
+	if (!(dynarray->list = malloc(nb_cells * cell_size)))
+		return (-1);
+	if (!(dynarray->tmp = malloc(nb_cells * cell_size)))
+		return (-1);
+	dynarray->cell_size = cell_size;
+	dynarray->nb_cells = nb_cells;
+	dynarray->byte_size = cell_size * nb_cells;
+	return (0);
+}
 
-  dynarray = (t_dynarray*)malloc(sizeof(t_dynarray));
-  dynarray->list = malloc(nb_cells * cell_size);
-  dynarray->tmp = malloc(nb_cells * cell_size);
-  dynarray->cell_size = cell_size;
-  dynarray->nb_cells = nb_cells;
-  dynarray->byte_size = cell_size * nb_cells;
+void clear_dynarray(t_dynarray *dynarray, nb_cells)
+{
+	int i;
 
-  return (dynarray);
+	i = 0;
+	if (nb_cells > 0)
+		while (i < nb_cells)
+		{
+			dynarray->list[i] = 0;
+			dynarray->tmp[i] = 0;
+			i++;
+		}
+	dynarray->cell_size = 0;
+	dynarray->nb_cells = 0;
+	dynarray->byte_size = 0;
 }
 
 int main(int argc, char **argv)
 {
-	t_dynarray	*dynarray;
+	int ret;
+	t_dynarray	dynarray;
+	(void)argc;
 
-	dynarray = init_dynarray((uint64_t)atoi(argv[1]), (size_t)atoi(argv[2]));
-	printf("nb_cells of dynarray: %d\n", dynarray->nb_cells);
-	printf("cells_size of dynarray: %d\n", dynarray->cell_size);
-	printf("byte_size of dynarray: %d\n", dynarray->byte_size);
+	ret = init_dynarray(&dynarray, (uint64_t)atoi(argv[1]), (size_t)atoi(argv[2]));
+	printf("nb_cells of dynarray: %d\n", dynarray.nb_cells);
+	printf("cells_size of dynarray: %d\n", dynarray.cell_size);
+	printf("byte_size of dynarray: %d\n", dynarray.byte_size);
+
+	//(char*)dynarray.list[0] = 'a';
+	//dynarray.list[1] = '\0';
+	memcpy(dynarray.list, "a", 2);
+	printf("list: %i\n", sizeof(dynarray);
+	return (ret);
 }
