@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:19:38 by nikotikch         #+#    #+#             */
-/*   Updated: 2020/12/01 21:12:40 by nikotikch        ###   ########.fr       */
+/*   Updated: 2020/12/02 23:46:00 by nikotikch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,9 @@ typedef struct
 }	t_dynarray;
 
 int	init_dynarray(t_dynarray *dynarray, uint64_t nb_cells, size_t cell_size);
+void clear_dynarray(t_dynarray *dynarray, uint64_t nb_cells);
+void free_dynarray(t_dynarray *dynarray);
+int push_dynarray(t_dynarray *dynarray, void *new_cells, uint64_t new_byte_size, int direction);
+void my_memcpy(void *ptr, void *ptr2, uint64_t n);
 
 #endif
