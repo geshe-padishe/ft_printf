@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 00:16:14 by nikotikch         #+#    #+#             */
-/*   Updated: 2020/12/11 12:29:41 by nikotikch        ###   ########.fr       */
+/*   Updated: 2020/12/14 17:00:21 by nikotikch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,24 @@
 //
 //	return (0);
 //}
-//int test_(void)
-//{
-//
-//	return (0);
-//}
+int test_dynarray_insert(void)
+{
+	t_dynarray dynarray;
+//	char *list;
+//	char *tmp;
+
+	init_dynarray(&dynarray, (uint64_t)4, (size_t)1);
+	push_dynarray(&dynarray, "abc\0", 4, true);
+	dyn_insr(&dynarray, "123", 2, 3);
+
+	printf("list after insert: %s\n", dynarray.list);
+	assert(dyn_insr(NULL, "123", 2, 3) == -1);
+	assert(dyn_insr(&dynarray, NULL, 2, 3) == -1);
+	assert(dyn_insr(&dynarray, "123", 2, 0) == -1);
+	assert(dyn_insr(&dynarray, "123", 100, 4) == -1);
+	return (0);
+}
+
 int test_dynarray_extract(void)
 {
 	t_dynarray dynarray;
@@ -152,17 +165,20 @@ int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	int ret;
-	t_dynarray dynarray;
+//	int ret;
+//	t_dynarray dynarray;
 //	//secure negative arguments ----> X
-	init_dynarray(&dynarray, (uint64_t)atoi(argv[1]), (size_t)atoi(argv[2]));
-	test_init_dynarray();
-	test_free_dynarray();
-	test_pop_dynarray();
-	test_push_dynarray();
-	test_dynarray_extract();
-	ft_memcpy(dynarray.list, "abcd", 4);
-	dynarray.nb_cells += 4;
+//	init_dynarray(&dynarray, (uint64_t)atoi(argv[1]), (size_t)atoi(argv[2]));
+//	test_init_dynarray();
+//	test_free_dynarray();
+//	test_pop_dynarray();
+//	test_push_dynarray();
+//	test_dynarray_extract();
+	test_dynarray_insert();
+//	char *list;
+//	char *tmp;
+//	ft_memcpy(dynarray.list, "abcd", 4);
+//	dynarray.nb_cells += 4;
 ////	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
 ////	printf("cells_size of dynarray: %zu\n", dynarray.cell_size);
 ////	printf("byte_size of dynarray: %llu\n", dynarray.byte_size);
@@ -181,14 +197,12 @@ int main(int argc, char **argv)
 ////	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
 ////	printf("list: %s\n\n", dynarray.list);
 ////
-	ret = push_dynarray(&dynarray, "3\0", 2, false);
-
-	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
-	printf("cells_size of dynarray: %zu\n", dynarray.cell_size);
-	printf("byte_size of dynarray: %llu\n", dynarray.byte_size);
-	printf("list: %s\n", dynarray.list);
-
-	if (0)
-		printf("-1 is true\n");
+//	ret = push_dynarray(&dynarray, "3\0", 2, false);
+//
+//	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
+//	printf("cells_size of dynarray: %zu\n", dynarray.cell_size);
+//	printf("byte_size of dynarray: %llu\n", dynarray.byte_size);
+//	printf("list: %s\n", dynarray.list);
+//
 	return (0);
 }
