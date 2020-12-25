@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/04 00:16:14 by nikotikch         #+#    #+#             */
-/*   Updated: 2020/12/14 17:00:21 by nikotikch        ###   ########.fr       */
+/*   Updated: 2020/12/16 13:50:45 by nikotikch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,35 +174,58 @@ int main(int argc, char **argv)
 //	test_pop_dynarray();
 //	test_push_dynarray();
 //	test_dynarray_extract();
-	test_dynarray_insert();
+//	test_dynarray_insert();
 //	char *list;
 //	char *tmp;
 //	ft_memcpy(dynarray.list, "abcd", 4);
 //	dynarray.nb_cells += 4;
-////	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
-////	printf("cells_size of dynarray: %zu\n", dynarray.cell_size);
-////	printf("byte_size of dynarray: %llu\n", dynarray.byte_size);
-////	printf("list: %s\n\n", dynarray.list);
-////
-////	//clear_dynarray(&dynarray, dynarray.nb_cells);
-////
-////	//printf("nb_cells of dynarray: %d\n", dynarray.nb_cells);
-////	//printf("cells_size of dynarray: %d\n", dynarray.cell_size);
-////	//printf("byte_size of dynarray: %d\n", dynarray.byte_size);
-////	//printf("list: %s\n\n", dynarray.list);
-////
-////	//free_dynarray(&dynarray);
-////	pop(&dynarray, 2, true);
-////	
-////	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
-////	printf("list: %s\n\n", dynarray.list);
-////
+//	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
+//	printf("cells_size of dynarray: %zu\n", dynarray.cell_size);
+//	printf("byte_size of dynarray: %llu\n", dynarray.byte_size);
+//	printf("list: %s\n\n", dynarray.list);
+//
+//	//clear_dynarray(&dynarray, dynarray.nb_cells);
+//
+//	//printf("nb_cells of dynarray: %d\n", dynarray.nb_cells);
+//	//printf("cells_size of dynarray: %d\n", dynarray.cell_size);
+//	//printf("byte_size of dynarray: %d\n", dynarray.byte_size);
+//	//printf("list: %s\n\n", dynarray.list);
+//
+//	//free_dynarray(&dynarray);
+//	pop(&dynarray, 2, true);
+//	
+//	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
+//	printf("list: %s\n\n", dynarray.list);
+//
 //	ret = push_dynarray(&dynarray, "3\0", 2, false);
 //
 //	printf("nb_cells of dynarray: %llu\n", dynarray.nb_cells);
 //	printf("cells_size of dynarray: %zu\n", dynarray.cell_size);
 //	printf("byte_size of dynarray: %llu\n", dynarray.byte_size);
 //	printf("list: %s\n", dynarray.list);
-//
+//        t_dynarray      array;
+	t_dynarray	array;
+	int i = 0;
+	int	*cell;
+
+	if (init_dynarray(&array, 0, sizeof(i)))
+		return (-1);
+	while(i < 100)
+	{
+		if (push_dynarray(&array, &i, 1, false))
+			return (-1);
+		if (pop_dynarray(&array, 1, false))
+			return (-1);
+		i++;
+	}
+	printf("byte_size: %llu\n", array.byte_size);
+	printf("nb_cells: %llu\n", array.nb_cells);
+	i = 0;
+	while (i < (int)array.nb_cells)
+	{
+		cell = dynacc(&array, (uint64_t)i);
+		printf("cell %d, %d\n", i, *cell);
+		i++;
+	}
 	return (0);
 }
