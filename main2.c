@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <locale.h>
 #include <string.h>
 
 int main()
@@ -6,12 +7,12 @@ int main()
 	int integer;
 	char string[10] = "blablabla";
 	char *pointer;
+	int number2;
 	double number;
 
 	pointer = string;
 	integer = 130000;
-	number = 2.553719;
-	//number = 22;
+	number = 223007896.553719;
 
 	printf("------------------------------------------\n");
 	//printf("%% %d, %.2s, %p\n", integer, string, pointer);
@@ -30,18 +31,6 @@ int main()
 	printf("gloat .2 : %.2g\n", number);
 	printf("float .2 : %.2f\n\n", number);
 
-	printf("eloat .3 : %.3e\n", number);
-	printf("gloat .3 : %.3g\n", number);
-	printf("float .3 : %.3f\n\n", number);
-
-	printf("eloat .4 : %.4e\n", number);
-	printf("gloat .4 : %.4g\n", number);
-	printf("float .4 : %.4f\n\n", number);
-
-	printf("eloat .5 : %.5e\n", number);
-	printf("gloat .5 : %.5g\n", number);
-	printf("float .5 : %.5f\n\n", number);
-
 	printf("eloat no prec: %e\n", number);
 	printf("gloat no prec: %g\n", number);
 	printf("float no prec: %f\n\n", number);
@@ -54,13 +43,23 @@ int main()
 	printf("gloat .20: %.20g\n", number);
 	printf("float .20: %.20f\n", number);
 
-	printf("------------------------------------------\n");
-	int number2;
-	number2 = -22;
+	printf("---------------------x-&-X------------------\n");
+	number2 = -223878152;
 
 	printf("unisgned hex float: %x\n", number2);
 	printf("unsigned capital float hex: %X\n\n", number2);
 
 	printf("unsigned alternate hex: %#x\n",number2);
 	printf("unsigned capitacal alternate hex: %#X\n",number2);
+
+	printf("----------------------'--------------------\n");
+
+	printf("'.10d: %'.10d\n", number2);
+	printf("'.10e: flag ''' bad behavior with 'e'\n");
+	printf("'.10g: %'.10g\n", number);
+	printf("'.10f: %'.10f\n", number);
+	setlocale(7, "LC_NUMERIC");
+	printf("localeconv(3): \"%c\"\n", *(localeconv()->thousands_sep));
+
+	printf("-------------------------------------------\n");
 }
