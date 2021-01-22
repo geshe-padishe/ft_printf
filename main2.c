@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <locale.h>
 #include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "libft.h"
 
 int main()
 {
@@ -9,11 +12,13 @@ int main()
 	char *pointer;
 	int number2;
 	double number;
+	char *ptr;
 
 	pointer = string;
 	integer = 130000;
 	number = 223007896.553719;
 	number2 = -223878152;
+	ptr = (char*)malloc(4);
 
 //	printf("------------------------------------------\n");
 //	//printf("%% %d, %.2s, %p\n", integer, string, pointer);
@@ -74,5 +79,36 @@ int main()
 	printf(" 0d: % 0d\n", integer);
 	printf("+0d: % 0d\n", integer);
 
-	printf("------------------------------------------\n");
+	printf("-------------------My-stuff-----------------------\n");
+	write(1, ptr, 8);
+	write(1, "hello\n", 6);
+	printf("ptr: %lx\n", ptr);
+	printf("ptr: %p\n", ptr);
+
+	long address;
+	long long address2;
+	char *str;
+
+	address = (long)ptr;
+	address2 = (long long)ptr;
+	printf("address: %lx\n", address);	
+	printf("sizeof(address): %lu\n", sizeof(address));
+	printf("sizeof(address2): %lu\n", sizeof(address2));
+	printf("sizeof(long): %lu\n", sizeof(long));
+	printf("sizeof(long long): %lu\n", sizeof(long long));
+	printf("sizeof(int): %lu\n", sizeof(int));
+	
+	str = ft_itoa(address);
+	printf("address: %lu\n", address % 16);
+	address = address / 16;
+	printf("address: %lu\n", address % 16);
+	address = address / 16;
+	printf("address: %lu\n", address % 16);
+	address = address / 16;
+	printf("address: %lu\n", address % 16);
+	address = address / 16;
+	printf("address: %lu\n", address % 16);
+	address = address / 16;
+	printf("address: %lu\n", address % 16);
+	printf("str: %s\n", str);
 }
