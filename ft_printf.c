@@ -1,75 +1,90 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
+#include "libft.h"
 
-int fill_flag_chart(uint64_t x, const char *input, char **flag_chart)
+void write_hex(unsigned long long nb)
 {
-	uint64_t i;
-
-	i = 0;
-	if (input[x + i] == '#')
-		flag_chart[1][i++] = 1;
-	if (input[x + i] == '0')
-		flag_chart[1][i++] = 1;
-	if (input[x + i] == '-')
-		flag_chart[1][i++] = 1;
-	if (input[x + i] == ' ')
-		flag_chart[1][i++] = 1;
-	if (input[x + i] == '+')
-		flag_chart[1][i++] = 1;
-	if (i > 0)
-		return (1);
-	return (0);
+	if (nb > 15)
+		write_hex(nb / 16);
+	write(1, &"0123456789abcdef"[nb % 16], 1);
 }
 
-int fill_lengths(uint64_t x, const char *input, uint64_t *lengths)
+bool add_flag(char flag, bool *flags)
 {
-	uint64_t i;
-
-	i = 0;
-	if (input[x + i] >= '0' && input[x + i] <= '9')
-		width = ft_atoi(input, x);
-	if (input[x + i] == '.')
-	{
-		if (input [x + i + 1] && input[x + i + 1] >= '0' && input[x + i + 1] <= '9')
-			precision = ft_atoi(input, x + i + 1)
-		else
-			return (-1);
-	}
+	if (flag == '#')
+		if (flags[0] != 1 && (flags[0] = 1))
+			return (0);
+	if (flag == '0')
+		if (flags[1] != 1 && (flags[1] = 1))
+			return (0);
+	if (flag == '-')
+		if (flags[2] != 1 && (flags[2] = 1))
+			return (0);
+	if (flag == '+')
+		if (flags[3] != 1 && (flags[3] = 1))
+			return (0);
+	if (flag == ' ')
+		if (flags[4] != 1 && (flags[4] = 1))
+			return (0);
+	printf("returning 1");
 	return (1);
 }
 
-int fill_length_modifiers(uint64_t x, const char *input)
+char *flag_parse(const char *input, bool *flags)
 {
-	int length;
-
-	length = 0;
-	if (input[x] == 'l')
-	{
-		if (input[x + i + 1] == 'l')
-			length = 2;
-		else
-			length = 1;
-	}
-	if (input[x + i] == 'h')
-	{
-		if (input[x + i + 1] == 'h')
-			length = 4;
-		else
-			length = 3;
-	}
-	return (length);
-}
-
-int ft_printf(const char *input, ...)
-{
-	uint64_t i;
+	int i;
 
 	i = 0;
-	while (input[i])
+	while (input[i] == '0' || input[i] == '#' || input[i] == '-' ||
+			input[i] == '+' || input[i] == ' ')
 	{
-		if (input[i] == '%' && input[i + 1] != '%')
-			conversions = conversion(); //finish....
+		printf("input[%d]: %c\n", i, input[i]);
+		if (add_flag(input[i], flags) == 1)
+			return (NULL);
 		i++;
 	}
+	return (input + i);
+}
+
+int field_width(const char *input)
+{
+	return (ft_atoi(input));
+}
+
+int precision(const char *input)
+{
+	return (ft_atoi(input));
+}
+
+int length_modifier(const char *input)
+{
+	int i;
+
+	i = 0;
+	while (i < 2)
+	{
+		if (input[i] == 'h')
+		{
+			i++;
+			if (input[i + 1] == 'h')
+				i++;
+		}
+	}
+}
+
+int main(int argc, char **argv)
+{
+	(void)argc;
+	int i;
+	bool flags[5];
+
+	for(i = 0; i < 5; i++)
+		flags[i] = 0;
+	if (flag_parse(argv[1], flags) == NULL)
+		return (1);
+	for(i = 0; i < 5; i++)
+		printf("flags[%d]:  %d\n", i, flags[i]);
+	return(0);
 }
