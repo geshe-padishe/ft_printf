@@ -5,11 +5,11 @@
 #include <unistd.h>
 //#include "libft.h"
 
-void write_hex(unsigned long long nb)
+void write_hex(unsigned long long nb, char *nb_str)
 {
 	if (nb > 15)
-		write_hex(nb / 16);
-	write(1, &"0123456789abcdef"[nb % 16], 1);
+		write_hex(nb / 16, nb_str + 1);
+	//ft_strncpy("0123456789abcdef"[nb % 16], nb_str);
 }
 
 int main()
@@ -27,44 +27,6 @@ int main()
 	number2 = -223878152;
 	ptr = (char*)malloc(4);
 
-//	printf("------------------------------------------\n");
-//	//printf("%% %d, %.2s, %p\n", integer, string, pointer);
-//	printf("gloat ' : %'g\n", number);
-//	printf("float ' : %'f\n\n", number);
-//
-//	printf("eloat .0 : %.0e\n", number);
-//	printf("gloat .0 : %.0g\n", number);
-//	printf("float .0 : %.0f\n\n", number);
-//
-//	printf("eloat .1 : %.1e\n", number);
-//	printf("gloat .1 : %.1g\n", number);
-//	printf("float .1 : %.1f\n\n", number);
-//
-//	printf("eloat .2 : %.2e\n", number);
-//	printf("gloat .2 : %.2g\n", number);
-//	printf("float .2 : %.2f\n\n", number);
-//
-//	printf("eloat no prec: %e\n", number);
-//	printf("gloat no prec: %g\n", number);
-//	printf("float no prec: %f\n\n", number);
-//
-//	printf("eloat .10: %.10e\n", number);
-//	printf("gloat .10: %.10g\n", number);
-//	printf("float .10: %.10f\n\n", number);
-//
-//	printf("eloat .20: %.20e\n", number);
-//	printf("gloat .20: %.20g\n", number);
-//	printf("float .20: %.20f\n", number);
-//
-//	printf("----------------------'---------------------\n");
-//
-//	printf("'.10e: flag ''' bad behavior with 'e'\n");
-//	printf("'.10d: %'.10d\n", number2);
-//	printf("'.10g: %'.10g\n", number);
-//	printf("'.10f: %'.10f\n", number);
-//	setlocale(7, "LC_NUMERIC");
-//	printf("localeconv(3): \"%c\"\n", *(localeconv()->thousands_sep));
-//
 //	printf("---------------------o-octal-----------------\n");
 //
 //	printf("+o: + undefined with o\n");
@@ -92,12 +54,13 @@ int main()
 
 	address = (long)ptr;
 	address2 = (long long)ptr;
-	address2 = -0;
 	printf("address2 hex: %#.10llx\n", address2);	
 
 	dprintf(1, "address2 hex: 0x");
-	write_hex(address2);
+//	write_hex(address2);
 	printf("\n");
+	printf("%% :% d\n", number2);
+	printf("%#.30llx\n", address2);
 	//str = ft_itoa(address);
 	//printf("address: %lu\n", address % 16);
 	//address = address / 16;
