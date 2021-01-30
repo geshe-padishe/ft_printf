@@ -4,13 +4,6 @@
 #include <stdbool.h>
 #include "libft.h"
 
-void write_hex(unsigned long long nb)
-{
-	if (nb > 15)
-		write_hex(nb / 16);
-	write(1, &"0123456789abcdef"[nb % 16], 1);
-}
-
 bool add_flag(char flag, bool *flags)
 {
 	if (flag == '#')
@@ -28,7 +21,6 @@ bool add_flag(char flag, bool *flags)
 	if (flag == ' ')
 		if (flags[4] != 1 && (flags[4] = 1))
 			return (0);
-	printf("returning 1");
 	return (1);
 }
 
@@ -67,11 +59,23 @@ int length_modifier(const char *input)
 	{
 		if (input[i] == 'h')
 		{
-			i++;
+			i = 1;
 			if (input[i + 1] == 'h')
-				i++;
+				i = 2;
+		}
+		else if (input[i] == 'l')
+		{
+			i = 3;
+			if (input[i + 2] == 'l')
+				i = 4;
 		}
 	}
+	return (i);
+}
+
+bool parsing(char *input)
+{
+r
 }
 
 int main(int argc, char **argv)
