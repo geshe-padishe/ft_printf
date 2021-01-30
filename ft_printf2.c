@@ -11,7 +11,7 @@ void write_digits(long long nb, int base)
 		abs_base = -base;
 	else
 		abs_base = base;
-	if (nb >= base)
+	if (nb >= abs_base)
 		write_digits(nb / abs_base, base);
 	if (base == 16)
 		write(1, &"0123456789abcdef"[nb % 16], 1);
@@ -23,19 +23,21 @@ void write_digits(long long nb, int base)
 	   write(1, &"0123456789"[nb % 10], 1);
 }
 
+//BEFORE PRINT_NB PUT PRECISION TO NB_DIGITS+1
 void print_nb(long long nb, int base, int precision, int length_modifier)
 {
 	long long nb_s;
 	int nb_digits;
 	int abs_base;
-	
+
 	(void)length_modifier;
 	nb_digits = 1;
 	nb_s = nb;
+	abs_base = base;
+	if (nb < 0)
+		nb_s = -nb;
 	if (base < 0)
 		abs_base = -base;
-	else
-		abs_base = base;
 	while ((nb_s = nb_s / abs_base) > 0)
 		nb_digits++;
 	while (precision > nb_digits)
@@ -48,11 +50,13 @@ void print_nb(long long nb, int base, int precision, int length_modifier)
 
 int main(int argc, char **argv)
 {
-	int nb;
+	long long nb;
 	int base;
 
 	(void)argc;
-	nb = atoi(argv[1]);
+	nb = (long long)atoi(argv[1]);
 	base = atoi(argv[2]);
+	printf("nb = %lld\n", nb);
+	printf("base = %d\n", base);
 	print_nb(nb, base, 13, 0);
 }

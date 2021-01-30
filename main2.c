@@ -61,6 +61,7 @@ int main()
 	printf("\n");
 	printf("%% :% d\n", number2);
 	printf("%#.30llx\n", address2);
+	printf("octal: %#.20llo\n", address2);
 	//str = ft_itoa(address);
 	//printf("address: %lu\n", address % 16);
 	//address = address / 16;

@@ -75,7 +75,7 @@ int length_modifier(const char *input)
 
 bool parsing(char *input)
 {
-r
+
 }
 
 int main(int argc, char **argv)
