@@ -3,6 +3,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+long long abs_value(long long nb)
+{
+	if (nb < 0)
+		return (-nb);
+	return (nb);
+}
+
 void write_digits(long long nb, int base)
 {
 	int abs_base;
@@ -32,20 +39,19 @@ void print_nb(long long nb, int base, int precision, int length_modifier)
 
 	(void)length_modifier;
 	nb_digits = 1;
-	nb_s = nb;
-	abs_base = base;
+	abs_base = abs_value(base);
+	nb_s = abs_value(nb);
 	if (nb < 0)
-		nb_s = -nb;
-	if (base < 0)
-		abs_base = -base;
+		write(1, "-", 1);
 	while ((nb_s = nb_s / abs_base) > 0)
 		nb_digits++;
-	while (precision > nb_digits)
+	while (precision >= nb_digits)
 	{
 		write(1, "0", 1);
 		precision--;
 	}
-	write_digits(nb, base);
+	nb_s = abs_value(nb);
+	write_digits(nb_s, base);
 }
 
 int main(int argc, char **argv)

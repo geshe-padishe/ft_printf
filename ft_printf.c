@@ -32,7 +32,6 @@ char *flag_parse(const char *input, bool *flags)
 	while (input[i] == '0' || input[i] == '#' || input[i] == '-' ||
 			input[i] == '+' || input[i] == ' ')
 	{
-		printf("input[%d]: %c\n", i, input[i]);
 		if (add_flag(input[i], flags) == 1)
 			return (NULL);
 		i++;
@@ -71,11 +70,6 @@ int length_modifier(const char *input)
 		}
 	}
 	return (i);
-}
-
-bool parsing(char *input)
-{
-
 }
 
 int main(int argc, char **argv)

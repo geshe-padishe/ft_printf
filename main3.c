@@ -19,12 +19,8 @@ int print_nb_options(char *flags, int base, long long nb)
 			else
 				return (0);
 		if (flag[3] == 1)
-		{
 			if (nb > 0)
 				write(1, "+", 1);
-			else if (nb < 0)
-				write(1, "-", 1);
-		}
 		return (1);
 	}
 	return (2);
