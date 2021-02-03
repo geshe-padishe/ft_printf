@@ -39,7 +39,7 @@ char *flag_parse(const char *input, bool *flags)
 	return (input + i);
 }
 
-int field_width(const char *input)
+int fld_wdt(const char *input)
 {
 	return (ft_atoi(input));
 }
