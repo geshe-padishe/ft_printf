@@ -14,10 +14,9 @@ void write_digits(long long nb, int base)
 {
 	int abs_base;
 
+	abs_base = base;
 	if (base < 0)
 		abs_base = -base;
-	else
-		abs_base = base;
 	if (nb >= abs_base)
 		write_digits(nb / abs_base, base);
 	if (base == 16)
@@ -30,6 +29,58 @@ void write_digits(long long nb, int base)
 	   write(1, &"0123456789"[nb % 10], 1);
 }
 
+int print_nb_options(char *flags, int base, long long nb)
+{
+	if (base == 16)
+		if (flags[0] == 1)
+			write(1, "0x", 2);
+	if (base == -16)
+		if (flags[0] == 1)
+			write(1, "0X", 2);
+	if (base == 10)
+	{
+		if (flags[4] == 1)
+		{
+			if (nb > 0)
+				write(1, " ", 1);
+			else
+				return (0);
+		}
+		if (flags[3] == 1)
+			if (nb > 0)
+				write(1, "+", 1);
+		return (1);
+	}
+	return (2);
+}
+
+int options_length(char *flags, int base, long long nb)
+{
+	if (base == 16)
+		if (flags[0] == 1)
+			return (2);
+	if (base == -16)
+		if (flags[0] == 1)
+			return (2);
+	if (base == 10)
+	{
+		if (flags[4] == 1)
+		{
+			if (nb > 0)
+				return (1);
+			else
+				return (0);
+		}
+		if (flags[3] == 1)
+		{
+			if (nb > 0)
+				return (1);
+			else if (nb < 0)
+				return (1);
+		}
+	}
+	return (0);
+}
 //BEFORE PRINT_NB PUT PRECISION TO NB_DIGITS+1
 void print_nb(long long nb, int base, int precision, int length_modifier)
 {

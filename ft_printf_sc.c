@@ -15,12 +15,12 @@ void print_str(char *str, int precision)
 	}
 }
 
-void print_char(char c)
+void print_char(unsigned char c)
 {
 	write(1, &c, 1);
 }
 
-void print_simple(char *flags, char conversion, int precision)
+void print_sc(char *flags, char conversion, int precision)
 {
 	if (conversion == 's')
 		print_str(str, precision);

@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdbool.h>
-#include "libft.h"
+#include <unistd.h>
 
 bool add_flag(char flag, bool *flags)
 {
@@ -24,7 +24,7 @@ bool add_flag(char flag, bool *flags)
 	return (1);
 }
 
-char *flag_parse(const char *input, bool *flags)
+const char *flag_parse(const char *input, bool *flags)
 {
 	int i;
 
@@ -39,37 +39,64 @@ char *flag_parse(const char *input, bool *flags)
 	return (input + i);
 }
 
-int field_width(const char *input)
-{
-	return (ft_atoi(input));
-}
-
-int precision(const char *input)
-{
-	return (ft_atoi(input));
-}
-
-int length_modifier(const char *input)
+int len_modify(const char **input)
 {
 	int i;
 
 	i = 0;
 	while (i < 2)
 	{
-		if (input[i] == 'h')
+		if (*input[i] == 'h')
 		{
 			i = 1;
-			if (input[i + 1] == 'h')
+			if (*input[i + 1] == 'h')
 				i = 2;
 		}
-		else if (input[i] == 'l')
+		else if (*input[i] == 'l')
 		{
 			i = 3;
-			if (input[i + 2] == 'l')
+			if (*input[i + 2] == 'l')
 				i = 4;
 		}
 	}
+	*input = *input + i;
 	return (i);
+}
+
+char ft_convr_parse(const char **input)
+{
+	char conversions[9] = "cspdiuxX";
+	int i;
+
+	i = 0;
+	while (i < 8)
+	{
+		if (**input == conversions[i])
+			return (**input);
+
+		i++;
+	}
+	return (0);
+}
+
+int ft_printf_parse(const char **input, int precision, bool *flags, int len_modif)
+{
+	int i;
+	int fld_wdt;
+
+	i = 1;
+	if (**input + 1 == '%')
+		write(1, "%", 1);
+	if ((*input = flag_parse(*input + 1, flags)))
+		return (0);
+	fld_wdt = ft_atoi(input);
+	while (*input[i] >= 48 && *input[i] <= 57)
+		*input++;
+	precision = ft_atoi(input + 1);
+	while (*input[i] >= 48 && *input[i] <= 57)
+		*input++;
+	i += len_modify(input);
+	return (ft_convr_parse(input));
 }
 
 int main(int argc, char **argv)
