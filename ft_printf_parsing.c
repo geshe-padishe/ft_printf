@@ -39,7 +39,21 @@ const char *flag_parse(const char *input, bool *flags)
 	return (input + i);
 }
 
+<<<<<<< HEAD:ft_printf_parsing.c
 int len_modify(const char **input)
+=======
+int fld_wdt(const char *input)
+{
+	return (ft_atoi(input));
+}
+
+int precision(const char *input)
+{
+	return (ft_atoi(input));
+}
+
+int length_modifier(const char *input)
+>>>>>>> 65e07462e4b308e0c415cf2aceccead9dfd81c2f:ft_printf.c
 {
 	int i;
 

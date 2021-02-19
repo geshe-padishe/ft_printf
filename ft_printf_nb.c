@@ -3,6 +3,16 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+int nb_digits(long long nb, int base)
+{
+	int nb_digits;
+
+	nb_digits = 1;
+	while ((nb = nb / base) > 0)
+		nb_digits++;
+	return (nb_digits);
+}
+
 long long abs_value(long long nb)
 {
 	if (nb < 0)
@@ -94,8 +104,7 @@ void print_nb(long long nb, int base, int precision, int length_modifier)
 	nb_s = abs_value(nb);
 	if (nb < 0)
 		write(1, "-", 1);
-	while ((nb_s = nb_s / abs_base) > 0)
-		nb_digits++;
+	nb_digits = nb_digits(nb, abs_base);
 	while (precision >= nb_digits)
 	{
 		write(1, "0", 1);
@@ -116,4 +125,5 @@ int main(int argc, char **argv)
 	printf("nb = %lld\n", nb);
 	printf("base = %d\n", base);
 	print_nb(nb, base, 13, 0);
+	printf("\n%020.5lld\n", nb);
 }
