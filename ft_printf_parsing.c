@@ -39,21 +39,7 @@ const char *flag_parse(const char *input, bool *flags)
 	return (input + i);
 }
 
-<<<<<<< HEAD:ft_printf_parsing.c
-int len_modify(const char **input)
-=======
-int fld_wdt(const char *input)
-{
-	return (ft_atoi(input));
-}
-
-int precision(const char *input)
-{
-	return (ft_atoi(input));
-}
-
-int length_modifier(const char *input)
->>>>>>> 65e07462e4b308e0c415cf2aceccead9dfd81c2f:ft_printf.c
+int len_mod(const char **input)
 {
 	int i;
 
@@ -97,7 +83,9 @@ int ft_printf_parse(const char **input, int precision, bool *flags, int len_modi
 {
 	int i;
 	int fld_wdt;
+	char *ptr;
 
+	ptr = (char *)*input;
 	i = 1;
 	if (**input + 1 == '%')
 		write(1, "%", 1);
@@ -105,11 +93,11 @@ int ft_printf_parse(const char **input, int precision, bool *flags, int len_modi
 		return (0);
 	fld_wdt = ft_atoi(input);
 	while (*input[i] >= 48 && *input[i] <= 57)
-		*input++;
+		ptr++;
 	precision = ft_atoi(input + 1);
 	while (*input[i] >= 48 && *input[i] <= 57)
-		*input++;
-	i += len_modify(input);
+		ptr++;
+	i += len_mod(input);
 	return (ft_convr_parse(input));
 }
 
