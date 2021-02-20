@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 void print_str(char *str, int precision)
 {
@@ -26,6 +27,14 @@ void print_sc(char *flags, char conversion, int precision)
 		print_str(str, precision);
 	if (conversion == 'c')
 		print_char(c);
+}
+
+int ft_printf(const char *, ...)
+{
+	va_list ap;
+
+	(va_start(ap, last));
+
 }
 
 int main(int argc, char **argv)

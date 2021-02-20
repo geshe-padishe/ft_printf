@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int nb_digits(long long nb, int base)
+int nb_digites(long long nb, int base)
 {
 	int nb_digits;
 
@@ -104,7 +104,7 @@ void print_nb(long long nb, int base, int precision, int length_modifier)
 	nb_s = abs_value(nb);
 	if (nb < 0)
 		write(1, "-", 1);
-	nb_digits = nb_digits(nb, abs_base);
+	nb_digits = nb_digites(nb, abs_base);
 	while (precision >= nb_digits)
 	{
 		write(1, "0", 1);
