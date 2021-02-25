@@ -29,12 +29,13 @@ void print_sc(char *flags, char conversion, int precision)
 		print_char(c);
 }
 
-int ft_printf(const char *, ...)
+int ft_printf(const char *input, ...)
 {
 	va_list ap;
 
-	(va_start(ap, last));
+	va_start(ap, input);
 
+	va_end(ap);
 }
 
 int main(int argc, char **argv)

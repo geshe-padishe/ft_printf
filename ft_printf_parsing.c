@@ -24,7 +24,7 @@ bool add_flag(char flag, bool *flags)
 	return (1);
 }
 
-const char *flag_parse(const char *input, bool *flags)
+int flag_parse(const char *input, bool *flags)
 {
 	int i;
 
@@ -33,17 +33,17 @@ const char *flag_parse(const char *input, bool *flags)
 			input[i] == '+' || input[i] == ' ')
 	{
 		if (add_flag(input[i], flags) == 1)
-			return (NULL);
+			return (-1);
 		i++;
 	}
-	return (input + i);
+	return (i);
 }
 
-int len_mod(const char **input)
+int len_modif(const char **input, int *len_mod)
 {
 	int i;
 
-	i = 0;
+	i = *len_mod;
 	while (i < 2)
 	{
 		if (*input[i] == 'h')
@@ -59,7 +59,6 @@ int len_mod(const char **input)
 				i = 4;
 		}
 	}
-	*input = *input + i;
 	return (i);
 }
 
@@ -79,26 +78,24 @@ char ft_convr_parse(const char **input)
 	return (0);
 }
 
-int ft_printf_parse(const char **input, int precision, bool *flags, int len_modif)
+int ft_printf_parse(const char **input, int *precision, bool *flags, int *len_mod, int *fld_wdt)
 {
 	int i;
-	int fld_wdt;
-	char *ptr;
 
-	ptr = (char *)*input;
-	i = 1;
-	if (**input + 1 == '%')
-		write(1, "%", 1);
-	if ((*input = flag_parse(*input + 1, flags)))
+	i = 0;
+	if (input[0][1] == '%')
+		write(1, "%", 1); return (1);
+	if ((i = flag_parse(*input + 1, flags)) == -1)
 		return (0);
-	fld_wdt = ft_atoi(input);
+	*fld_wdt = ft_atoi(*input[i]);
 	while (*input[i] >= 48 && *input[i] <= 57)
-		ptr++;
-	precision = ft_atoi(input + 1);
+		input++;
+	if (*input[i++] == '.')
+		*precision = ft_atoi(input + i);
 	while (*input[i] >= 48 && *input[i] <= 57)
-		ptr++;
-	i += len_mod(input);
-	return (ft_convr_parse(input));
+		input++;
+	i += len_modif(input, len_mod);
+	return (i);
 }
 
 int main(int argc, char **argv)
@@ -109,8 +106,6 @@ int main(int argc, char **argv)
 
 	for(i = 0; i < 5; i++)
 		flags[i] = 0;
-	if (flag_parse(argv[1], flags) == NULL)
-		return (1);
 	for(i = 0; i < 5; i++)
 		printf("flags[%d]:  %d\n", i, flags[i]);
 	return(0);
