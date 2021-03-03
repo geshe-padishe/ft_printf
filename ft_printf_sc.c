@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <stdarg.h>
 
 void print_str(char *str, int precision)
@@ -32,9 +33,23 @@ void print_sc(char *flags, char conversion, int precision)
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
+	int i;
+	int precision;
+	bool flags[5];
+	int len_mod;
+	int fld_wdt;
 
+	i = 0;
+	precision = 0;
 	va_start(ap, input);
-
+	while (input[i])
+	{
+		if (input[i] != '%')
+			write(1, &input[i], 1);
+		else
+			i += ft_printf_parse(&input, &precision, flags, &len_mod, &fld_wdt);
+		i++;
+	}
 	va_end(ap);
 }
 

@@ -44,25 +44,33 @@ int len_modif(const char **input, int *len_mod)
 	int i;
 
 	i = *len_mod;
-	while (i < 2)
+	while (*input[i] < 2)
 	{
 		if (*input[i] == 'h')
 		{
-			i = 1;
+			*len_mod = 1;
 			if (*input[i + 1] == 'h')
-				i = 2;
+			{
+				*len_mod = 2;
+				return (2);
+			}
+			return (1);
 		}
 		else if (*input[i] == 'l')
 		{
-			i = 3;
+			*len_mod = 3;
 			if (*input[i + 2] == 'l')
-				i = 4;
+			{
+				*len_mod = 4;
+				return (2);
+			}
+			return (1);
 		}
 	}
-	return (i);
+	return (0);
 }
 
-char ft_convr_parse(const char **input)
+char ft_convr_parse(const char **input, char conv)
 {
 	char conversions[9] = "cspdiuxX";
 	int i;
@@ -71,8 +79,7 @@ char ft_convr_parse(const char **input)
 	while (i < 8)
 	{
 		if (**input == conversions[i])
-			return (**input);
-
+			return (1);
 		i++;
 	}
 	return (0);
@@ -95,6 +102,7 @@ int ft_printf_parse(const char **input, int *precision, bool *flags, int *len_mo
 	while (*input[i] >= 48 && *input[i] <= 57)
 		input++;
 	i += len_modif(input, len_mod);
+	if (ft_convr_parse(&input[i]);
 	return (i);
 }
 
