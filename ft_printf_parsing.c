@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include "ft_printf.h"
 
 bool add_flag(char flag, bool *flags)
 {
@@ -85,24 +86,28 @@ char ft_convr_parse(const char **input, char conv)
 	return (0);
 }
 
-int ft_printf_parse(const char **input, int *precision, bool *flags, int *len_mod, int *fld_wdt)
+int ft_printf_parse(const char **input, conv *whoopty)
 {
 	int i;
 
 	i = 0;
 	if (input[0][1] == '%')
 		write(1, "%", 1); return (1);
-	if ((i = flag_parse(*input + 1, flags)) == -1)
+	if ((i = flag_parse(*input + 1, whoopty->flags)) == -1)
 		return (0);
-	*fld_wdt = ft_atoi(*input[i]);
+	whoopty->fld_wdt = ft_atoi(*input[i]);
 	while (*input[i] >= 48 && *input[i] <= 57)
 		input++;
-	if (*input[i++] == '.')
-		*precision = ft_atoi(input + i);
+	if (*input[i] == '.')
+	{
+		i++;
+		whoopty->precision = ft_atoi(input + i);
+	}
 	while (*input[i] >= 48 && *input[i] <= 57)
 		input++;
-	i += len_modif(input, len_mod);
-	if (ft_convr_parse(&input[i]);
+	i += len_modif(input, whoopty->len_modif);
+	if (ft_convr_parse(&input[i], whoopty->conversion) == 0)
+		return (0);
 	return (i);
 }
 
