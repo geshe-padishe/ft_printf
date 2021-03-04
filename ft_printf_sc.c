@@ -34,13 +34,9 @@ int ft_printf(const char *input, ...)
 {
 	va_list ap;
 	int i;
-	int precision;
 	bool flags[5];
-	int len_mod;
-	int fld_wdt;
 
 	i = 0;
-	precision = 0;
 	va_start(ap, input);
 	while (input[i])
 	{
