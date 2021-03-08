@@ -2,6 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "ft_printf.h"
 
 int nb_digites(long long nb, int base)
 {
@@ -92,23 +93,22 @@ int options_length(char *flags, int base, long long nb)
 	return (0);
 }
 //BEFORE PRINT_NB PUT PRECISION TO NB_DIGITS+1
-void print_nb(long long nb, int base, int precision, int length_modifier)
+void print_nb(long long nb, int base, conv whoopty)
 {
 	long long nb_s;
 	int nb_digits;
 	int abs_base;
 
-	(void)length_modifier;
 	nb_digits = 1;
 	abs_base = abs_value(base);
 	nb_s = abs_value(nb);
 	if (nb < 0)
 		write(1, "-", 1);
 	nb_digits = nb_digites(nb, abs_base);
-	while (precision >= nb_digits)
+	while (whoopty.precision >= nb_digits)
 	{
 		write(1, "0", 1);
-		precision--;
+		whoopty.precision--;
 	}
 	nb_s = abs_value(nb);
 	write_digits(nb_s, base);

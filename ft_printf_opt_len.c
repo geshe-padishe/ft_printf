@@ -5,7 +5,7 @@
 
 int print_nb_options(char *flags, int base, long long nb)
 {
-	if (base == 16)
+		if (base == 16)
 		if (flags[0] == 1)
 			write(1, "0x", 2);
 	if (base == -16)

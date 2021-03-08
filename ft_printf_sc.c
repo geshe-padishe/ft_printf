@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include "ft_printf.h"
 
 void print_str(char *str, int precision)
 {
@@ -17,7 +18,7 @@ void print_str(char *str, int precision)
 	}
 }
 
-void print_char(unsigned char c)
+void ft_putchar(unsigned char c)
 {
 	write(1, &c, 1);
 }
@@ -27,14 +28,14 @@ void print_sc(char *flags, char conversion, int precision)
 	if (conversion == 's')
 		print_str(str, precision);
 	if (conversion == 'c')
-		print_char(c);
+		ft_putchar(c);
 }
 
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
 	int i;
-	bool flags[5];
+	conv whoopty;
 
 	i = 0;
 	va_start(ap, input);
@@ -43,7 +44,7 @@ int ft_printf(const char *input, ...)
 		if (input[i] != '%')
 			write(1, &input[i], 1);
 		else
-			i += ft_printf_parse(&input, &precision, flags, &len_mod, &fld_wdt);
+			i += ft_printf_parse(&input, whoopty);
 		i++;
 	}
 	va_end(ap);

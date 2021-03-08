@@ -40,29 +40,29 @@ int flag_parse(const char *input, bool *flags)
 	return (i);
 }
 
-int len_modif(const char **input, int *len_mod)
+int len_modif(const char **input, char *len_mod)
 {
 	int i;
 
-	i = *len_mod;
+	i = 0;
 	while (*input[i] < 2)
 	{
 		if (*input[i] == 'h')
 		{
-			*len_mod = 1;
+			*len_mod = 'h';
 			if (*input[i + 1] == 'h')
 			{
-				*len_mod = 2;
+				*len_mod = 'H';
 				return (2);
 			}
 			return (1);
 		}
 		else if (*input[i] == 'l')
 		{
-			*len_mod = 3;
+			*len_mod = 'l';
 			if (*input[i + 2] == 'l')
 			{
-				*len_mod = 4;
+				*len_mod = 'L';
 				return (2);
 			}
 			return (1);
@@ -71,16 +71,18 @@ int len_modif(const char **input, int *len_mod)
 	return (0);
 }
 
-char ft_convr_parse(const char **input, char conv)
+char ft_convr_parse(const char **input, conv whoopty)
 {
-	char conversions[9] = "cspdiuxX";
 	int i;
 
 	i = 0;
 	while (i < 8)
 	{
-		if (**input == conversions[i])
+		if (**input == whoopty.conversions[i])
+		{
+			whoopty.conversion = **input;
 			return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -97,16 +99,16 @@ int ft_printf_parse(const char **input, conv *whoopty)
 		return (0);
 	whoopty->fld_wdt = ft_atoi(*input[i]);
 	while (*input[i] >= 48 && *input[i] <= 57)
-		input++;
+		i++;
 	if (*input[i] == '.')
 	{
 		i++;
 		whoopty->precision = ft_atoi(input + i);
 	}
 	while (*input[i] >= 48 && *input[i] <= 57)
-		input++;
-	i += len_modif(input, whoopty->len_modif);
-	if (ft_convr_parse(&input[i], whoopty->conversion) == 0)
+		i++;
+	i += len_modif(input, &whoopty->len_modif);
+	if (ft_convr_parse(&input[i], *whoopty) == 0)
 		return (0);
 	return (i);
 }

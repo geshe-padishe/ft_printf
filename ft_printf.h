@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/03/04 16:02:07 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/03/08 16:07:01 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 typedef struct	conv
 {
+	char conversions[9] = "cspdiuxX";
 	int precision;
 	int fld_wdt;
 	char conversion;
 	bool flags[5];
-	int len_modif;
+	char len_modif;
 }				conv;
 #endif
