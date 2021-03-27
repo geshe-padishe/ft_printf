@@ -59,14 +59,25 @@ int main()
 	dprintf(1, "address2 hex: 0x");
 //	write_hex(address2);
 	printf("\n");
-	printf("%% :% d\n", number2);
+	printf("%%%% :%%\n");
 	printf("%#.30llx\n", address2);
 	printf("octal: %#.20llo\n", address2);
-	printf("%%-10.5s: %10.5s\n", "Hear that clap");
+	printf("%%-10.5s: %10.5s\n", "clapclapclapclapclap");
 	printf("----------------fast_stuff---------------------\n");
 	printf("%-30ld\n", address);
-	printf("%%-10.5s: %10.5s\n", "Hear that clap");
+	printf("%%-10.5s: %10.5s\n", "clapclapclapclapclap");
 	printf("%0c\n", "dwrewrq");
+	printf("nb: %d\n", 0);
+	printf("nb: % d\n", 0);
+	printf("nb: %+d\n", 0);
+	printf("nb: %d\n", 3);
+	printf("nb: % d\n", 3);
+	printf("nb: %+d\n", 3);
+
+	printf("nb: %d\n", -3);
+	printf("nb: % d\n", -3);
+	printf("nb: %+d\n", -3);
+
 	//str = ft_itoa(address);
 	//printf("address: %lu\n", address % 16);
 	//address = address / 16;

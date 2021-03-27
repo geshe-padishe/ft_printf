@@ -71,16 +71,16 @@ int len_modif(const char **input, char *len_mod)
 	return (0);
 }
 
-char ft_convr_parse(const char **input, conv whoopty)
+char ft_convr_parse(const char **input, conv *whoopty)
 {
 	int i;
 
 	i = 0;
 	while (i < 8)
 	{
-		if (**input == whoopty.conversions[i])
+		if (**input == whoopty->conversions[i])
 		{
-			whoopty.conversion = **input;
+			whoopty->conversion = **input;
 			return (1);
 		}
 		i++;
@@ -108,7 +108,7 @@ int ft_printf_parse(const char **input, conv *whoopty)
 	while (*input[i] >= 48 && *input[i] <= 57)
 		i++;
 	i += len_modif(input, &whoopty->len_modif);
-	if (ft_convr_parse(&input[i], *whoopty) == 0)
+	if (ft_convr_parse(&input[i], whoopty) == 0)
 		return (0);
 	return (i);
 }

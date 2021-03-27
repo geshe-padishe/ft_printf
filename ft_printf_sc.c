@@ -31,10 +31,20 @@ void print_sc(char *flags, char conversion, int precision)
 		ft_putchar(c);
 }
 
+type *def_type(conv whoopty)
+{
+	void *ptr;
+	if (whoopty.conversion == 'd')
+	{
+	}
+	return (
+}
+
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
 	int i;
+	void *ptr;
 	conv whoopty;
 
 	i = 0;
@@ -44,7 +54,11 @@ int ft_printf(const char *input, ...)
 		if (input[i] != '%')
 			write(1, &input[i], 1);
 		else
+		{
 			i += ft_printf_parse(&input, whoopty);
+			if (i == 0)
+				return (-1);
+		}
 		i++;
 	}
 	va_end(ap);
