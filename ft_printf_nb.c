@@ -124,6 +124,5 @@ int main(int argc, char **argv)
 	base = atoi(argv[2]);
 	printf("nb = %lld\n", nb);
 	printf("base = %d\n", base);
-	print_nb(nb, base, 13, 0);
 	printf("\n%020.5lld\n", nb);
 }

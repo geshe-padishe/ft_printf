@@ -74,11 +74,12 @@ int len_modif(const char **input, char *len_mod)
 char ft_convr_parse(const char **input, conv *whoopty)
 {
 	int i;
+	char convs[9] = "diouxXcs";
 
 	i = 0;
 	while (i < 8)
 	{
-		if (**input == whoopty->conversions[i])
+		if (**input == convs[i])
 		{
 			whoopty->conversion = **input;
 			return (1);
