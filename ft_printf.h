@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/03/31 17:04:16 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:19:03 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@ typedef struct	conv
 	char conversion;
 	bool flags[5];
 	char len_modif;
-}				conv;
-
-typedef struct	type
-{
 	long long lnglng;
 	unsigned long long un_lnglng;
 	char *string;
-}				type;
+}				conv;
 
 bool add_flag(char flag, bool *flags);
 int flag_parse(const char *input, bool *flags);
@@ -49,7 +45,7 @@ int options_length(char *flags, int base, long long nb);
 void print_nb(long long nb, int base, conv whoopty);
 void print_str(char *str, int precision);
 void ft_putchar(unsigned char c);
-type def_type(conv whoopty, va_list *ap);
+conv def_type(conv whoopty, va_list *ap);
 void print_sc(char *flags, char conversion, int precision, va_list ap);
 int ft_printf(const char *input, ...);
 

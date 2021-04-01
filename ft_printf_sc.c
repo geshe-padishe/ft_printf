@@ -31,20 +31,35 @@ void print_sc(char *flags, char conversion, int precision, va_list ap)
 		ft_putchar(c);
 }
 
-type def_type(conv whoopty, va_list *ap)
+conv def_type(conv whoopty, va_list *ap)
 {
-	type argument;
 	if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'c')
 	{
 		if (whoopty.len_modif == 'l' || whoopty.len_modif == 'L')
-			argument.lnglng = va_arg(*ap, long long);
-		argument.lnglng = va_arg(*ap, int);
+			whoopty.lnglng = va_arg(*ap, long long);
+		whoopty.lnglng = va_arg(*ap, int);
 	}
 	else if (whoopty.conversion == 's')
-		argument.string = va_arg(*ap, char*);
+		whoopty.string = va_arg(*ap, char*);
 	else
-		argument.un_lnglng = va_arg(*ap, unsigned long long);
-	return (argument);
+		whoopty.un_lnglng = va_arg(*ap, unsigned long long);
+	return (whoopty);
+}
+
+void conv_bridge(conv whoopty)
+{
+	if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'u')
+		print_nb(whoopty.lnglng, 10, whoopty);
+	else if (whoopty.conversion == 'x')
+		print_nb(whoopty.un_lnglng, 16, whoopty);
+	else if (whoopty.conversion == 'X')
+		print_nb(whoopty.un_lnglng, -16, whoopty);
+	else if (whoopty.conversion == 'o')
+		print_nb(whoopty.un_lnglng, 8, whoopty);
+	else if (whoopty.conversion == 's')
+		print_str(whoopty.string, whoopty.precision)
+	else
+		ft_putchar(whoopty.string[0]);
 }
 
 int ft_printf(const char *input, ...)
@@ -64,6 +79,7 @@ int ft_printf(const char *input, ...)
 			i += ft_printf_parse(&input, &whoopty);
 			if (i == 0)
 				return (-1);
+			def_type(whoopty, &ap);
 		}
 		i++;
 	}
@@ -73,15 +89,15 @@ int ft_printf(const char *input, ...)
 void test_fct(int arg_ct, ...)
 {
 	va_list ap;
-	type argument;
+	conv whoopty;
 
 	va_start(ap, arg_ct);
-	argument.lnglng = va_arg(ap, int);
-	printf("arg.lnglng = %lld\n", argument.lnglng);
-	argument.lnglng = va_arg(ap, int);
-	printf("arg.lnglng = %lld\n", argument.lnglng);
-	argument.lnglng = va_arg(ap, long);
-	printf("arg.lnglng = %lld\n", argument.lnglng);
+	whoopty.lnglng = va_arg(ap, int);
+	printf("arg.lnglng = %lld\n", whoopty.lnglng);
+	whoopty.lnglng = va_arg(ap, int);
+	printf("arg.lnglng = %lld\n", whoopty.lnglng);
+	whoopty.lnglng = va_arg(ap, long);
+	printf("arg.lnglng = %lld\n", whoopty.lnglng);
 	va_end(ap);
 }
 
