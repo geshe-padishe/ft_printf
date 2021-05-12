@@ -23,13 +23,13 @@ void ft_putchar(unsigned char c)
 	write(1, &c, 1);
 }
 
-void print_sc(char *flags, char conversion, int precision, va_list ap)
-{
-	if (conversion == 's')
-		print_str(str, precision);
-	if (conversion == 'c')
-		ft_putchar(c);
-}
+//void print_sc(char *flags, char conversion, int precision, va_list ap)
+//{
+//	if (conversion == 's')
+//		print_str(str, precision);
+//	if (conversion == 'c')
+//		ft_putchar(c);
+//}
 
 conv def_type(conv whoopty, va_list *ap)
 {
@@ -57,7 +57,7 @@ void conv_bridge(conv whoopty)
 	else if (whoopty.conversion == 'o')
 		print_nb(whoopty.un_lnglng, 8, whoopty);
 	else if (whoopty.conversion == 's')
-		print_str(whoopty.string, whoopty.precision)
+		print_str(whoopty.string, whoopty.precision);
 	else
 		ft_putchar(whoopty.string[0]);
 }
@@ -76,7 +76,7 @@ int ft_printf(const char *input, ...)
 			write(1, &input[i], 1);
 		else
 		{
-			i += ft_printf_parse(&input, &whoopty);
+			i += ft_printf_parse(input, &whoopty);
 			if (i == 0)
 				return (-1);
 			def_type(whoopty, &ap);
@@ -84,6 +84,7 @@ int ft_printf(const char *input, ...)
 		i++;
 	}
 	va_end(ap);
+	return (0);
 }
 
 void test_fct(int arg_ct, ...)

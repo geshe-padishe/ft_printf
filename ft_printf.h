@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/04/01 16:19:03 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/12 14:22:31 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ typedef struct	conv
 
 bool add_flag(char flag, bool *flags);
 int flag_parse(const char *input, bool *flags);
-int len_modif(const char **input, char *len_mod);
-char ft_convr_parse(const char **input, conv *whoopty);
-int ft_printf_parse(const char **input, conv *whoopty);
+int len_modif(const char *input, char *len_mod);
+char ft_convr_parse(const char *input, conv *whoopty);
+int ft_printf_parse(const char *input, conv *whoopty);
 int nb_digites(long long nb, int base);
 long long abs_value(long long nb);
 void write_digits(long long nb, int base);
