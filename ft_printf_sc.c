@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include "ft_printf.h"
+#include "libft.h"
 
 void print_str(char *str, int precision)
 {
@@ -87,43 +88,63 @@ int ft_printf(const char *input, ...)
 	return (0);
 }
 
-void test_fct(int arg_ct, ...)
+int print_conv(conv *whoopty)
 {
-	va_list ap;
-	conv whoopty;
-
-	va_start(ap, arg_ct);
-	whoopty.lnglng = va_arg(ap, int);
-	printf("arg.lnglng = %lld\n", whoopty.lnglng);
-	whoopty.lnglng = va_arg(ap, int);
-	printf("arg.lnglng = %lld\n", whoopty.lnglng);
-	whoopty.lnglng = va_arg(ap, long);
-	printf("arg.lnglng = %lld\n", whoopty.lnglng);
-	va_end(ap);
+	int i = 0;
+	for(i = 0; i < 5; i++)
+		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
+	printf("field width: %i\n", whoopty->fld_wdt);
+	printf("precision: %i\n", whoopty->precision);
+	printf("length modif: %c\n", whoopty->len_modif);
+	printf("conversion: %c\n", whoopty->conversion);
+	printf("whoopty.lnglng: %lli\n", whoopty->lnglng);
+	printf("whoopty.unlnglng: %lli\n", whoopty->un_lnglng);
+	return 0;
 }
+
+//void test_fct(conv *whoopty, int arg_ct, ...)
+//{
+//	va_list ap;
+//
+//	va_start(ap, arg_ct);
+//	whoopty->lnglng = va_arg(ap, int);
+//	printf("arg.lnglng = %lld\n", whoopty->lnglng);
+//	whoopty->lnglng = va_arg(ap, int);
+//	printf("arg.lnglng = %lld\n", whoopty->lnglng);
+//	whoopty->lnglng = va_arg(ap, long);
+//	printf("arg.lnglng = %lld\n", whoopty->lnglng);
+//	va_end(ap);
+//}
 
 int main(int argc, char **argv)
 {
-	int integer;
-	long long longteger;
-	short shorteger;
+//	int integer;
+//	long long longteger;
+//	short shorteger;
 	conv conversion;
-	int conv_len = 0;
+//	int conv_len = 0;
 
-	conv_len = sizeof(conversion);
-	bzero(&conversion, conv_len);
-	shorteger = 32332;
-	longteger = 321432144324231;
-	integer = 1232132231;
 	(void)argc;
-	conversion.precision = atoi(argv[2]);
-	dprintf(1, "str: ");
-	print_str(argv[1], conversion.precision);
-	dprintf(1, "\nchar: ");
-	ft_putchar(argv[1][0]);
-	printf("\nstring with 0 precision: ");
-	printf("%.s\n", "ggsdafew");
-
-	test_fct(1, shorteger, integer, longteger);
-	printf("short: %ld, int: %ld, long: %ld, long long: %ld\n", sizeof(short), sizeof(int), sizeof(long), sizeof(long long));
+//	conv_len = sizeof(conversion);
+	bzero(&conversion, sizeof(conversion));
+	conversion.lnglng = 2313123214324314;
+	conversion.lnglng = ft_atoi(argv[2]);
+//	shorteger = 32332;
+//	longteger = 321432144324231;
+//	integer = 1232132231;
+//	(void)argc;
+//	conversion.precision = atoi(argv[2]);
+//	dprintf(1, "str: ");
+//	printf("%s\n", argv[1]);
+//	dprintf(1, "\nchar: ");
+//	ft_putchar(argv[1][0]);
+//	printf("\nstring with 0 precision: ");
+//	printf("%.s\n", "ggsdafew");
+//
+//	test_fct(&conversion, 1, shorteger, integer, longteger);
+	ft_printf_parse(argv[1], &conversion);
+	print_conv(&conversion);
+	conv_bridge(conversion);
+	printf("|zaza|");
+	printf(argv[1], conversion.lnglng);
 }

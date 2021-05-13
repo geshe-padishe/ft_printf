@@ -112,17 +112,17 @@ int ft_printf_parse(const char *input, conv *whoopty)
 	return (i);
 }
 
-int print_conv(conv *whoopty)
-{
-	int i = 0;
-	for(i = 0; i < 5; i++)
-		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
-	printf("field width: %i\n", whoopty->fld_wdt);
-	printf("precision: %i\n", whoopty->precision);
-	printf("length modif: %c\n", whoopty->len_modif);
-	printf("conversion: %c\n", whoopty->conversion);
-	return 0;
-}
+//int print_conv(conv *whoopty)
+//{
+//	int i = 0;
+//	for(i = 0; i < 5; i++)
+//		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
+//	printf("field width: %i\n", whoopty->fld_wdt);
+//	printf("precision: %i\n", whoopty->precision);
+//	printf("length modif: %c\n", whoopty->len_modif);
+//	printf("conversion: %c\n", whoopty->conversion);
+//	return 0;
+//}
 
 //int main(int argc, char **argv)
 //{

@@ -40,7 +40,7 @@ void write_digits(long long nb, int base)
 	   write(1, &"0123456789"[nb % 10], 1);
 }
 
-int print_nb_options(char *flags, int base, long long nb)
+int print_nb_options(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
@@ -58,14 +58,14 @@ int print_nb_options(char *flags, int base, long long nb)
 				return (0);
 		}
 		if (flags[3] == 1)
-			if (nb > 0)
+			if (nb >= 0)
 				write(1, "+", 1);
 		return (1);
 	}
 	return (2);
 }
 
-int options_length(char *flags, int base, long long nb)
+int options_length(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
@@ -99,11 +99,11 @@ void print_nb(long long nb, int base, conv whoopty)
 	int nb_digits;
 	int abs_base;
 
-	nb_digits = 1;
 	abs_base = abs_value(base);
 	nb_s = abs_value(nb);
 	if (nb < 0)
 		write(1, "-", 1);
+	print_nb_options(whoopty.flags, base, nb);
 	nb_digits = nb_digites(nb, abs_base);
 	while (whoopty.precision >= nb_digits)
 	{
@@ -114,15 +114,15 @@ void print_nb(long long nb, int base, conv whoopty)
 	write_digits(nb_s, base);
 }
 
-int main(int argc, char **argv)
-{
-	long long nb;
-	int base;
-
-	(void)argc;
-	nb = (long long)atoi(argv[1]);
-	base = atoi(argv[2]);
-	printf("nb = %lld\n", nb);
-	printf("base = %d\n", base);
-	printf("\n%020.5lld\n", nb);
-}
+//int main(int argc, char **argv)
+//{
+//	long long nb;
+//	int base;
+//
+//	(void)argc;
+//	nb = (long long)atoi(argv[1]);
+//	base = atoi(argv[2]);
+//	printf("nb = %lld\n", nb);
+//	printf("base = %d\n", base);
+//	printf("\n%020.5lld\n", nb);
+//}
