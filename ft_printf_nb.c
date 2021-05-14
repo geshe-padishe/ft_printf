@@ -40,7 +40,7 @@ void write_digits(long long nb, int base)
 	   write(1, &"0123456789"[nb % 10], 1);
 }
 
-int print_nb_options(bool *flags, int base, long long nb)
+void print_nb_options(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
@@ -48,21 +48,17 @@ int print_nb_options(bool *flags, int base, long long nb)
 	if (base == -16)
 		if (flags[0] == 1)
 			write(1, "0X", 2);
+	if (base == 8 && flags[0] == 1)
+		write(1, "0", 1);
 	if (base == 10)
 	{
 		if (flags[4] == 1)
-		{
 			if (nb > 0)
 				write(1, " ", 1);
-			else
-				return (0);
-		}
 		if (flags[3] == 1)
 			if (nb >= 0)
 				write(1, "+", 1);
-		return (1);
 	}
-	return (2);
 }
 
 int options_length(bool *flags, int base, long long nb)
@@ -75,6 +71,8 @@ int options_length(bool *flags, int base, long long nb)
 			return (2);
 	if (base == 10)
 	{
+		if (nb < 0)
+			return (1);
 		if (flags[4] == 1)
 		{
 			if (nb > 0)
@@ -92,26 +90,43 @@ int options_length(bool *flags, int base, long long nb)
 	}
 	return (0);
 }
+
+void draw_field(conv whoopty, int nb_digits, int options_length)
+{
+	if (nb_digits > whoopty.precision)
+		whoopty.precision = nb_digits;
+	while (whoopty.fld_wdt > whoopty.precision + options_length)
+	{
+		write(1, " ", 1);
+		whoopty.fld_wdt--;
+	}
+}
 //BEFORE PRINT_NB PUT PRECISION TO NB_DIGITS+1
 void print_nb(long long nb, int base, conv whoopty)
 {
 	long long nb_s;
 	int nb_digits;
 	int abs_base;
+	int precision;
 
+	precision = whoopty.precision;
 	abs_base = abs_value(base);
 	nb_s = abs_value(nb);
+	nb_digits = nb_digites(nb_s, abs_base);
+	if (whoopty.flags[2] == 0)
+		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 	if (nb < 0)
 		write(1, "-", 1);
 	print_nb_options(whoopty.flags, base, nb);
-	nb_digits = nb_digites(nb, abs_base);
-	while (whoopty.precision >= nb_digits)
+	while (precision > nb_digits)
 	{
 		write(1, "0", 1);
-		whoopty.precision--;
+		precision--;
 	}
 	nb_s = abs_value(nb);
 	write_digits(nb_s, base);
+	if (whoopty.flags[2] == 1)
+		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 }
 
 //int main(int argc, char **argv)

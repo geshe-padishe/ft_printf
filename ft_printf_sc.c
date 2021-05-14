@@ -5,7 +5,6 @@
 #include <stdbool.h>
 #include <stdarg.h>
 #include "ft_printf.h"
-#include "libft.h"
 
 void print_str(char *str, int precision)
 {
@@ -38,7 +37,8 @@ conv def_type(conv whoopty, va_list *ap)
 	{
 		if (whoopty.len_modif == 'l' || whoopty.len_modif == 'L')
 			whoopty.lnglng = va_arg(*ap, long long);
-		whoopty.lnglng = va_arg(*ap, int);
+		else
+			whoopty.lnglng = va_arg(*ap, int);
 	}
 	else if (whoopty.conversion == 's')
 		whoopty.string = va_arg(*ap, char*);
@@ -80,9 +80,11 @@ int ft_printf(const char *input, ...)
 			i += ft_printf_parse(input, &whoopty);
 			if (i == 0)
 				return (-1);
-			def_type(whoopty, &ap);
+			whoopty = def_type(whoopty, &ap);
+			conv_bridge(whoopty);
 		}
 		i++;
+		ft_bzero(&whoopty, sizeof(whoopty));
 	}
 	va_end(ap);
 	return (0);
@@ -118,20 +120,16 @@ int print_conv(conv *whoopty)
 
 int main(int argc, char **argv)
 {
-//	int integer;
-//	long long longteger;
-//	short shorteger;
-	conv conversion;
+	int integer;
+	long long longteger;
+	short shorteger;
 //	int conv_len = 0;
 
 	(void)argc;
 //	conv_len = sizeof(conversion);
-	bzero(&conversion, sizeof(conversion));
-	conversion.lnglng = 2313123214324314;
-	conversion.lnglng = ft_atoi(argv[2]);
-//	shorteger = 32332;
-//	longteger = 321432144324231;
-//	integer = 1232132231;
+	shorteger = 32332;
+	longteger = 321432144324231;
+	integer = 1232132231;
 //	(void)argc;
 //	conversion.precision = atoi(argv[2]);
 //	dprintf(1, "str: ");
@@ -142,9 +140,7 @@ int main(int argc, char **argv)
 //	printf("%.s\n", "ggsdafew");
 //
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
-	ft_printf_parse(argv[1], &conversion);
-	print_conv(&conversion);
-	conv_bridge(conversion);
-	printf("|zaza|");
-	printf(argv[1], conversion.lnglng);
+	ft_printf(argv[1], ft_atoi(argv[2]));
+	write(1, "%\n", 2);
+	printf(argv[1], ft_atoi(argv[2]));
 }

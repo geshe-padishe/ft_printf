@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include "ft_printf.h"
-#include "libft.h"
 
 bool add_flag(char flag, bool *flags)
 {
