@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_parsing.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/15 16:34:14 by ngenadie          #+#    #+#             */
+/*   Updated: 2021/05/15 17:50:37 by ngenadie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -86,28 +98,60 @@ char ft_convr_parse(const char *input, conv *whoopty)
 	return (0);
 }
 
-int ft_printf_parse(const char *input, conv *whoopty)
+void flag_peacemaker(bool *flags)
+{
+	if (flags[2] == 1)
+		flags[1] = 0;
+	if (flags[4] == 1)
+		flags[3] = 0;
+}
+
+void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i)
+{
+	if (input[*i] == '*' && (*i = *i + 1))
+		whoopty->fld_wdt = va_arg(*ap, int);
+	else
+	{
+		whoopty->fld_wdt = ft_atoi(&input[*i]);
+		while (input[*i] >= 48 && input[*i] <= 57)
+			*i = *i + 1;
+	}
+	if (input[*i] == '.' && (*i = *i + 1))
+	{
+		*i = *i + 1;
+		if (input[*i] == '*' && (*i = *i + 1))
+			whoopty->precision = va_arg(*ap, int);
+		else
+		{
+			whoopty->flags[1] = 0;
+			whoopty->precision = ft_atoi(input + *i);
+			while (input[*i] >= 48 && input[*i] <= 57)
+				*i = *i + 1;
+		}
+	}
+	if (whoopty->fld_wdt < 0)
+		whoopty->flags[2] = 1;
+	if (whoopty->precision < 0)
+		whoopty->precision = 0;
+}
+
+int ft_printf_parse(const char *input, conv *whoopty, va_list *ap)
 {
 	int i;
 
 	i = 1;
 	if (input[1] == '%')
 		write(1, "%", 1);
-	if ((i += flag_parse(input + 1, whoopty->flags)) == -1)
-		return (0);
-	whoopty->fld_wdt = ft_atoi(&input[i]);
-	while (input[i] >= 48 && input[i] <= 57)
-		i++;
-	if (input[i] == '.')
+	else
 	{
-		i++;
-		whoopty->precision = ft_atoi(input + i);
+		if ((i += flag_parse(input + 1, whoopty->flags)) == -1)
+			return (0);
+		prec_wdt(input, whoopty, ap, &i);
+		i += len_modif(&input[i], &whoopty->len_modif);
+		if (ft_convr_parse(&input[i], whoopty) == 0)
+			return (0);
+		flag_peacemaker(whoopty->flags);
 	}
-	while (input[i] >= 48 && input[i] <= 57)
-		i++;
-	i += len_modif(&input[i], &whoopty->len_modif);
-	if (ft_convr_parse(&input[i], whoopty) == 0)
-		return (0);
 	return (i);
 }
 

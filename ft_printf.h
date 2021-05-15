@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/14 17:45:52 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/15 16:49:29 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool add_flag(char flag, bool *flags);
 int flag_parse(const char *input, bool *flags);
 int len_modif(const char *input, char *len_mod);
 char ft_convr_parse(const char *input, conv *whoopty);
-int ft_printf_parse(const char *input, conv *whoopty);
+int ft_printf_parse(const char *input, conv *whoopty, va_list *ap);
 int nb_digites(long long nb, int base);
 long long abs_value(long long nb);
 void write_digits(long long nb, int base);
@@ -49,5 +49,7 @@ void ft_putchar(unsigned char c);
 conv def_type(conv whoopty, va_list *ap);
 void print_sc(bool *flags, char conversion, int precision, va_list ap);
 int ft_printf(const char *input, ...);
+void flag_peacemaker(bool *flags);
+void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i);
 
 #endif

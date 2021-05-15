@@ -97,7 +97,10 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 		whoopty.precision = nb_digits;
 	while (whoopty.fld_wdt > whoopty.precision + options_length)
 	{
-		write(1, " ", 1);
+		if (whoopty.flags[1] == 1)
+			write(1, "0", 1);
+		else
+			write(1, " ", 1);
 		whoopty.fld_wdt--;
 	}
 }

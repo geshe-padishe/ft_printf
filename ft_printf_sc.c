@@ -49,18 +49,23 @@ conv def_type(conv whoopty, va_list *ap)
 
 void conv_bridge(conv whoopty)
 {
-	if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'u')
-		print_nb(whoopty.lnglng, 10, whoopty);
-	else if (whoopty.conversion == 'x')
-		print_nb(whoopty.un_lnglng, 16, whoopty);
-	else if (whoopty.conversion == 'X')
-		print_nb(whoopty.un_lnglng, -16, whoopty);
-	else if (whoopty.conversion == 'o')
-		print_nb(whoopty.un_lnglng, 8, whoopty);
-	else if (whoopty.conversion == 's')
-		print_str(whoopty.string, whoopty.precision);
+	if (whoopty.lnglng == 0 && whoopty.un_lnglng == 0 && whoopty.string == 0)
+		return ;
 	else
-		ft_putchar(whoopty.string[0]);
+	{
+		if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'u')
+			print_nb(whoopty.lnglng, 10, whoopty);
+		else if (whoopty.conversion == 'x')
+			print_nb(whoopty.un_lnglng, 16, whoopty);
+		else if (whoopty.conversion == 'X')
+			print_nb(whoopty.un_lnglng, -16, whoopty);
+		else if (whoopty.conversion == 'o')
+			print_nb(whoopty.un_lnglng, 8, whoopty);
+		else if (whoopty.conversion == 's')
+			print_str(whoopty.string, whoopty.precision);
+		else
+			ft_putchar(whoopty.string[0]);
+	}
 }
 
 int ft_printf(const char *input, ...)
@@ -77,7 +82,7 @@ int ft_printf(const char *input, ...)
 			write(1, &input[i], 1);
 		else
 		{
-			i += ft_printf_parse(input, &whoopty);
+			i += ft_printf_parse(input, &whoopty, &ap);
 			if (i == 0)
 				return (-1);
 			whoopty = def_type(whoopty, &ap);
@@ -140,7 +145,7 @@ int main(int argc, char **argv)
 //	printf("%.s\n", "ggsdafew");
 //
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
-	ft_printf(argv[1], ft_atoi(argv[2]));
-	write(1, "%\n", 2);
-	printf(argv[1], ft_atoi(argv[2]));
+	ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
+	write(1, "%\nflex\n", 7);
+	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
 }
