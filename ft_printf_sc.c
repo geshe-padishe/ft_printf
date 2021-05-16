@@ -147,6 +147,12 @@ int main(int argc, char **argv)
 	printf("%%\n");
 	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
 	printf("%%\n");
+
+	int i;
+	unsigned int j;
+	i = -12;
+	j = 4;
+	printf("result i * j = %d", i * j);
 	
 //	printf("return :%d\n", printf("%s\n", argv[1]));
 	return (0);
