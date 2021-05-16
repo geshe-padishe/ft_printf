@@ -10,9 +10,15 @@ void print_str(char *str, int precision)
 {
 	int i;
 
+	printf("flex\n");
 	i = 0;
+	if (precision < 0)
+		precision = 1;
+	if (precision == 0)
+		precision = 13;
 	while (str[i] && i < precision)
 	{
+		printf("precision = %d\n", precision);
 		write(1, str + i, 1);
 		i++;
 	}
@@ -62,7 +68,7 @@ void conv_bridge(conv whoopty)
 	else if (whoopty.conversion == 's')
 		print_str(whoopty.string, whoopty.precision);
 	else
-		ft_putchar(whoopty.string[0]);
+		ft_putchar(whoopty.character);
 }
 
 int ft_printf(const char *input, ...)
@@ -143,17 +149,11 @@ int main(int argc, char **argv)
 //	printf("%.s\n", "ggsdafew");
 //
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
-	ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
-	printf("%%\n");
-	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
+	//ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
+	//printf("%%\n");
+	printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
 	printf("%%\n");
 
-	int i;
-	unsigned int j;
-	i = -12;
-	j = 4;
-	printf("result i * j = %d", i * j);
-	
 //	printf("return :%d\n", printf("%s\n", argv[1]));
 	return (0);
 }

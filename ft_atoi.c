@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:38:53 by user42            #+#    #+#             */
-/*   Updated: 2021/05/16 16:16:28 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/16 17:29:18 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int						ft_atoi_sign(const char *nstr)
 
 int						ft_atoi(const char *nstr)
 {
-	unsigned long long int	nbr;
+	long long int	nbr;
 	int						sign;
 
 	sign = 1;

@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:34:14 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/16 14:21:38 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/16 18:26:33 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,8 @@ void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i)
 	{
 		if (input[*i] == '*' && (*i = *i + 1))
 			whoopty->precision = va_arg(*ap, int);
-		else if (input[*i] >= 48 && input[*i] <= 57)
+		else if ((input[*i] >= 48 && input[*i] <= 57) || input[*i] == '+'
+				|| input[*i] == '-')
 		{
 			whoopty->flags[1] = 0;
 			whoopty->precision = ft_atoi(input + *i);

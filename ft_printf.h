@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/15 16:49:29 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/16 17:53:37 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	conv
 	long long lnglng;
 	unsigned long long un_lnglng;
 	char *string;
+	char character;
 }				conv;
 
 bool add_flag(char flag, bool *flags);
