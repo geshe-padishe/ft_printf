@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:34:14 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/15 17:50:37 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/16 14:21:38 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,20 @@ void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i)
 	}
 	if (input[*i] == '.' && (*i = *i + 1))
 	{
-		*i = *i + 1;
 		if (input[*i] == '*' && (*i = *i + 1))
 			whoopty->precision = va_arg(*ap, int);
-		else
+		else if (input[*i] >= 48 && input[*i] <= 57)
 		{
 			whoopty->flags[1] = 0;
 			whoopty->precision = ft_atoi(input + *i);
 			while (input[*i] >= 48 && input[*i] <= 57)
 				*i = *i + 1;
 		}
+		else
+			whoopty->precision = 0;
 	}
 	if (whoopty->fld_wdt < 0)
 		whoopty->flags[2] = 1;
-	if (whoopty->precision < 0)
-		whoopty->precision = 0;
 }
 
 int ft_printf_parse(const char *input, conv *whoopty, va_list *ap)

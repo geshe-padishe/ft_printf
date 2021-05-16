@@ -49,23 +49,20 @@ conv def_type(conv whoopty, va_list *ap)
 
 void conv_bridge(conv whoopty)
 {
-	if (whoopty.lnglng == 0 && whoopty.un_lnglng == 0 && whoopty.string == 0)
-		return ;
+	if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
+		print_nb(whoopty.lnglng, 10, whoopty);
+	else if (whoopty.conversion == 'u')
+		print_nb(whoopty.un_lnglng, 10, whoopty);
+	else if (whoopty.conversion == 'x')
+		print_nb(whoopty.un_lnglng, 16, whoopty);
+	else if (whoopty.conversion == 'X')
+		print_nb(whoopty.un_lnglng, -16, whoopty);
+	else if (whoopty.conversion == 'o')
+		print_nb(whoopty.un_lnglng, 8, whoopty);
+	else if (whoopty.conversion == 's')
+		print_str(whoopty.string, whoopty.precision);
 	else
-	{
-		if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'u')
-			print_nb(whoopty.lnglng, 10, whoopty);
-		else if (whoopty.conversion == 'x')
-			print_nb(whoopty.un_lnglng, 16, whoopty);
-		else if (whoopty.conversion == 'X')
-			print_nb(whoopty.un_lnglng, -16, whoopty);
-		else if (whoopty.conversion == 'o')
-			print_nb(whoopty.un_lnglng, 8, whoopty);
-		else if (whoopty.conversion == 's')
-			print_str(whoopty.string, whoopty.precision);
-		else
-			ft_putchar(whoopty.string[0]);
-	}
+		ft_putchar(whoopty.string[0]);
 }
 
 int ft_printf(const char *input, ...)
@@ -82,6 +79,8 @@ int ft_printf(const char *input, ...)
 			write(1, &input[i], 1);
 		else
 		{
+			ft_bzero(&whoopty, sizeof(whoopty));
+			whoopty.precision = 1;
 			i += ft_printf_parse(input, &whoopty, &ap);
 			if (i == 0)
 				return (-1);
@@ -89,7 +88,6 @@ int ft_printf(const char *input, ...)
 			conv_bridge(whoopty);
 		}
 		i++;
-		ft_bzero(&whoopty, sizeof(whoopty));
 	}
 	va_end(ap);
 	return (0);
@@ -146,6 +144,10 @@ int main(int argc, char **argv)
 //
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
 	ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
-	write(1, "%\nflex\n", 7);
+	printf("%%\n");
 	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]), ft_atoi(argv[4]));
+	printf("%%\n");
+	
+//	printf("return :%d\n", printf("%s\n", argv[1]));
+	return (0);
 }

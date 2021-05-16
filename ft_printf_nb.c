@@ -121,13 +121,11 @@ void print_nb(long long nb, int base, conv whoopty)
 	if (nb < 0)
 		write(1, "-", 1);
 	print_nb_options(whoopty.flags, base, nb);
-	while (precision > nb_digits)
-	{
+	while (precision-- > nb_digits)
 		write(1, "0", 1);
-		precision--;
-	}
 	nb_s = abs_value(nb);
-	write_digits(nb_s, base);
+	if (nb_s != 0 || whoopty.precision > 0)
+		write_digits(nb_s, base);
 	if (whoopty.flags[2] == 1)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 }
