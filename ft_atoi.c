@@ -6,7 +6,7 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:38:53 by user42            #+#    #+#             */
-/*   Updated: 2021/05/16 17:29:18 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/17 13:18:01 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-unsigned long long int	gooba(void)
+long long int	gooba(void)
 {
-	unsigned long long int	nbr;
+	long long int	nbr;
 	int						i;
 
 	i = 0;

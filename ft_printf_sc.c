@@ -149,8 +149,8 @@ int main(int argc, char **argv)
 //	printf("%.s\n", "ggsdafew");
 //
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
-	//ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
-	//printf("%%\n");
+	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
+	printf("%%\n");
 	printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
 	printf("%%\n");
 
