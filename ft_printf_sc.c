@@ -6,27 +6,15 @@
 #include <stdarg.h>
 #include "ft_printf.h"
 
-void print_str(char *str, int precision)
+void print_str(conv whoopty)
 {
-	int i;
-
-	printf("flex\n");
-	i = 0;
-	if (precision < 0)
-		precision = 1;
-	if (precision == 0)
-		precision = 13;
-	while (str[i] && i < precision)
-	{
-		printf("precision = %d\n", precision);
-		write(1, str + i, 1);
-		i++;
-	}
+	whoopty.character = 0;
+	return ;
 }
 
-void ft_putchar(unsigned char c)
+void ft_putchar(conv whoopty)
 {
-	write(1, &c, 1);
+	write(1, &whoopty.character, 1);
 }
 
 //void print_sc(char *flags, char conversion, int precision, va_list ap)
@@ -66,16 +54,16 @@ void conv_bridge(conv whoopty)
 	else if (whoopty.conversion == 'o')
 		print_nb(whoopty.un_lnglng, 8, whoopty);
 	else if (whoopty.conversion == 's')
-		print_str(whoopty.string, whoopty.precision);
+		print_str(whoopty);
 	else
-		ft_putchar(whoopty.character);
+		ft_putchar(whoopty);
 }
 
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
 	int i;
-	conv whoopty;
+conv whoopty;
 
 	i = 0;
 	va_start(ap, input);
@@ -149,8 +137,8 @@ int main(int argc, char **argv)
 //	printf("%.s\n", "ggsdafew");
 //
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
-	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
-	printf("%%\n");
+//	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
+//	printf("%%\n");
 	printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
 	printf("%%\n");
 

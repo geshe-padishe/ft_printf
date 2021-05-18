@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/16 17:53:37 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/17 16:46:37 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void write_digits(long long nb, int base);
 void print_nb_options(bool *flags, int base, long long nb);
 int options_length(bool *flags, int base, long long nb);
 void print_nb(long long nb, int base, conv whoopty);
-void print_str(char *str, int precision);
-void ft_putchar(unsigned char c);
+void print_str(conv whoopty);
+void ft_putchar(conv whoopty);
 conv def_type(conv whoopty, va_list *ap);
 void print_sc(bool *flags, char conversion, int precision, va_list ap);
 int ft_printf(const char *input, ...);
