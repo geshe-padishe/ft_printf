@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/15 16:34:14 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/16 18:26:33 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/21 18:52:56 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i)
 	else
 	{
 		whoopty->fld_wdt = ft_atoi(&input[*i]);
-		while (input[*i] >= 48 && input[*i] <= 57)
 			*i = *i + 1;
 	}
 	if (input[*i] == '.' && (*i = *i + 1))
