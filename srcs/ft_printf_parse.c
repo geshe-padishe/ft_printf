@@ -18,7 +18,7 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 		if (input[i] == '.')
 		{
 			i++;
-			if (input[i] == '*' (i = i + 1))
+			if (input[i] == '*' && (i = i + 1))
 				whoopty->precision = va_arg(*ap, int);
 			whoopty->precision = ft_atoi(&input[i]);
 			while (input[i] >= 48 && input[i] <= 57)

@@ -6,35 +6,13 @@
 /*   By: user42 <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 18:38:53 by user42            #+#    #+#             */
-/*   Updated: 2021/05/16 16:16:28 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/22 20:04:35 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-unsigned long long int	gooba(void)
-{
-	unsigned long long int	nbr;
-	int						i;
-
-	i = 0;
-	nbr = 1;
-	while (i < 63)
-	{
-		nbr = nbr * 2;
-		i++;
-	}
-	return (nbr);
-}
-
-int						gooba2(int sign)
-{
-	if (sign == 1)
-		return (-1);
-	return (0);
-}
 
 int						ft_atoi_sign(const char *nstr)
 {
@@ -60,8 +38,6 @@ int						ft_atoi(const char *nstr)
 		while (*nstr >= '0' && *nstr <= '9')
 		{
 			nbr = nbr * 10 + (*nstr - 48);
-			if (nbr >= gooba())
-				return (gooba2(sign));
 			nstr++;
 		}
 	else

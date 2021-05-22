@@ -89,7 +89,6 @@ int print_conv(conv *whoopty)
 		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
 	printf("field width: %i\n", whoopty->fld_wdt);
 	printf("precision: %i\n", whoopty->precision);
-	printf("length modif: %c\n", whoopty->len_modif);
 	printf("conversion: %c\n", whoopty->conversion);
 	printf("whoopty.lnglng: %lli\n", whoopty->lnglng);
 	printf("whoopty.unlnglng: %lli\n", whoopty->un_lnglng);
@@ -134,8 +133,8 @@ int main(int argc, char **argv)
 //	test_fct(&conversion, 1, shorteger, integer, longteger);
 //	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
 //	printf("%%\n");
-//	ft_printf(argv[1], atoi(argv[2]));
-//	printf("%%\n");
+	ft_printf(argv[1], atoi(argv[2]));
+	printf("%%\n");
 	printf(argv[1], atoi(argv[2]));
 	printf("%%\n");
 //	printf("return :%d\n", printf("%s\n", argv[1]));
