@@ -6,15 +6,16 @@
 #include <stdarg.h>
 #include "ft_printf.h"
 
-void print_str(conv whoopty)
+int charput(char *character, int nb_char)
 {
-	whoopty.character = 0;
-	return ;
-}
+	static int ret = 0;
 
-void ft_putchar(conv whoopty)
-{
-	write(1, &whoopty.character, 1);
+	if (nb_char > 0)
+	{
+		ret += nb_char;
+		write(1, character, nb_char);
+	}
+	return (ret);
 }
 
 //void print_sc(char *flags, char conversion, int precision, va_list ap)
@@ -49,16 +50,17 @@ void conv_bridge(conv whoopty)
 	else if (whoopty.conversion == 'o')
 		print_nb(whoopty.un_lnglng, 8, whoopty);
 	else if (whoopty.conversion == 's')
-		print_str(whoopty);
-	else
-		ft_putchar(whoopty);
+		charput(whoopty.string, whoopty.precision);
+	else if (whoopty.conversion == 'c')
+		charput(&whoopty.character, 1);
 }
 
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
 	int i;
-conv whoopty;
+	conv whoopty;
+
 
 	i = 0;
 	va_start(ap, input);
@@ -79,21 +81,21 @@ conv whoopty;
 		i++;
 	}
 	va_end(ap);
-	return (0);
+	return (charput(NULL, 0));
 }
 
-int print_conv(conv *whoopty)
-{
-	int i = 0;
-	for(i = 0; i < 5; i++)
-		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
-	printf("field width: %i\n", whoopty->fld_wdt);
-	printf("precision: %i\n", whoopty->precision);
-	printf("conversion: %c\n", whoopty->conversion);
-	printf("whoopty.lnglng: %lli\n", whoopty->lnglng);
-	printf("whoopty.unlnglng: %lli\n", whoopty->un_lnglng);
-	return 0;
-}
+//int print_conv(conv *whoopty)
+//{
+//	int i = 0;
+//	for(i = 0; i < 5; i++)
+//		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
+//	printf("field width: %i\n", whoopty->fld_wdt);
+//	printf("precision: %i\n", whoopty->precision);
+//	printf("conversion: %c\n", whoopty->conversion);
+//	printf("whoopty.lnglng: %lli\n", whoopty->lnglng);
+//	printf("whoopty.unlnglng: %lli\n", whoopty->un_lnglng);
+//	return 0;
+//}
 
 //void test_fct(conv *whoopty, int arg_ct, ...)
 //{
@@ -109,34 +111,34 @@ int print_conv(conv *whoopty)
 //	va_end(ap);
 //}
 
-int main(int argc, char **argv)
-{
-	int integer;
-	long long longteger;
-	short shorteger;
-//	int conv_len = 0;
-
-	(void)argc;
-//	conv_len = sizeof(conversion);
-	shorteger = 32332;
-	longteger = 321432144324231;
-	integer = 1232132231;
-//	(void)argc;
-//	conversion.precision = atoi(argv[2]);
-//	dprintf(1, "str: ");
-//	printf("%s\n", argv[1]);
-//	dprintf(1, "\nchar: ");
-//	ft_putchar(argv[1][0]);
-//	printf("\nstring with 0 precision: ");
-//	printf("%.s\n", "ggsdafew");
+//int main(int argc, char **argv)
+//{
+//	int integer;
+//	long long longteger;
+//	short shorteger;
+////	int conv_len = 0;
 //
-//	test_fct(&conversion, 1, shorteger, integer, longteger);
-//	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
+//	(void)argc;
+////	conv_len = sizeof(conversion);
+//	shorteger = 32332;
+//	longteger = 321432144324231;
+//	integer = 1232132231;
+////	(void)argc;
+////	conversion.precision = atoi(argv[2]);
+////	dprintf(1, "str: ");
+////	printf("%s\n", argv[1]);
+////	dprintf(1, "\nchar: ");
+////	ft_putchar(argv[1][0]);
+////	printf("\nstring with 0 precision: ");
+////	printf("%.s\n", "ggsdafew");
+////
+////	test_fct(&conversion, 1, shorteger, integer, longteger);
+////	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
+////	printf("%%\n");
+////	ft_printf(argv[1], atoi(argv[2]));
+////	printf("%%\n");
+//	printf(argv[1], atoi(argv[2]));
 //	printf("%%\n");
-	ft_printf(argv[1], atoi(argv[2]));
-	printf("%%\n");
-	printf(argv[1], atoi(argv[2]));
-	printf("%%\n");
-//	printf("return :%d\n", printf("%s\n", argv[1]));
-	return (0);
-}
+////	printf("return :%d\n", printf("%s\n", argv[1]));
+//	return (0);
+//}

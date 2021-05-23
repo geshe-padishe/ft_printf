@@ -31,33 +31,33 @@ void write_digits(long long nb, int base)
 	if (nb >= abs_base)
 		write_digits(nb / abs_base, base);
 	if (base == 16)
-		write(1, &"0123456789abcdef"[nb % 16], 1);
+		charput(&"0123456789abcdef"[nb % 16], 1);
 	else if (base == -16)
-		write(1, &"0123456789ABCDEF"[nb % 16], 1);
+		charput(&"0123456789ABCDEF"[nb % 16], 1);
 	else if (base == 8)
-		write(1, &"01234567"[nb % 8], 1);
+		charput(&"01234567"[nb % 8], 1);
 	else
-	   write(1, &"0123456789"[nb % 10], 1);
+	   charput(&"0123456789"[nb % 10], 1);
 }
 
 void print_nb_options(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
-			write(1, "0x", 2);
+			charput("0x", 2);
 	if (base == -16)
 		if (flags[0] == 1)
-			write(1, "0X", 2);
+			charput("0X", 2);
 	if (base == 8 && flags[0] == 1)
-		write(1, "0", 1);
+		charput("0", 1);
 	if (base == 10)
 	{
 		if (flags[4] == 1)
 			if (nb > 0)
-				write(1, " ", 1);
+				charput(" ", 1);
 		if (flags[3] == 1)
 			if (nb >= 0)
-				write(1, "+", 1);
+				charput("+", 1);
 	}
 }
 

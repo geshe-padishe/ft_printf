@@ -1,32 +1,43 @@
-CC = gcc
+NAME			= libftprintf.a
 
-NAME = libftprintf.a
+SRCS_LIST		= \
+					ft_printf.c \
+					ft_printf_nb.c \
+					ft_printf_parse.c \
 
-CFLAGS = -Wall -Wextra -Werror
+SRCS			= $(addprefix ${DIR}/, ${SRCS_LIST})
 
-SRC_C = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c \
-ft_isprint.c ft_itoa.c ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-ft_split.c ft_strchr.c ft_strdup.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
-ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c \
-ft_putendl_fd.c ft_putnbr_fd.c ft_putchar_fd.c ft_putstr_fd.c ft_printf_nb.c ft_printf_parse.c \
-ft_printf_sc.c
+OBJS			= ${SRCS:.c=.o}
 
-INC_H = libft.h
+DIR				= srcs
+HEADER			= includes
 
-OBJS = $(SRC_C:.c=.o)
-	
-all: $(NAME)
+LIBFT 			= dyn_libft
 
-$(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS)
+CC				= gcc
+FLAGS 			= -Wall -Wextra -Werror
+RM				= rm -f
+
+all:			${NAME}
+
+$(NAME):		${OBJS}
+				@make -C $(LIBFT)
+				@cp $(LIBFT)/libft.a ./$(NAME)
+				@ar -rcs ${NAME} ${OBJS}
+
+bonus:			${NAME}
+
+%.o: %.c
+				@${CC} ${FLAGS} -Idyn_libft -I ${HEADER} -o $@ -c $<
 
 clean:
-	rm -f $(OBJS)
+				@${RM} ${OBJS}
+				@make clean -C $(LIBFT)
 
-fclean: clean
-	rm -f $(NAME)
+fclean:			clean
+				@${RM} ${NAME}
+				@make fclean -C $(LIBFT)
 
-re: fclean all
+re:				fclean all
 
-$%.o: $%.c $(INC_H)
-	$(CC) $(CFLAGS) -c $< -o $@
+.PHONY: 		all fclean clean re
