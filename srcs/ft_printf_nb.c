@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_nb.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
+/*   Updated: 2021/05/24 17:00:40 by ngenadie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -98,9 +110,9 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 	while (whoopty.fld_wdt > whoopty.precision + options_length)
 	{
 		if (whoopty.flags[1] == 1)
-			write(1, "0", 1);
+			charput(&'0', 1);
 		else
-			write(1, " ", 1);
+			charput(&' ', 1);
 		whoopty.fld_wdt--;
 	}
 }
@@ -119,10 +131,10 @@ void print_nb(long long nb, int base, conv whoopty)
 	if (whoopty.flags[2] == 0)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 	if (nb < 0)
-		write(1, "-", 1);
+		charput("-", 1);
 	print_nb_options(whoopty.flags, base, nb);
 	while (precision-- > nb_digits)
-		write(1, "0", 1);
+		charput("0", 1);
 	nb_s = abs_value(nb);
 	if (nb_s != 0 || whoopty.precision > 0)
 		write_digits(nb_s, base);

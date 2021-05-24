@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
+/*   Updated: 2021/05/24 19:09:36 by ngenadie         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -32,6 +44,8 @@ conv def_type(conv whoopty, va_list *ap)
 		whoopty.lnglng = va_arg(*ap, int);
 	else if (whoopty.conversion == 's')
 		whoopty.string = va_arg(*ap, char*);
+	else if (whoopty.conversion == 'c')
+		whoopty.character = (char)va_arg(*ap, int);
 	else
 		whoopty.un_lnglng = va_arg(*ap, unsigned long long);
 	return (whoopty);
@@ -50,9 +64,21 @@ void conv_bridge(conv whoopty)
 	else if (whoopty.conversion == 'o')
 		print_nb(whoopty.un_lnglng, 8, whoopty);
 	else if (whoopty.conversion == 's')
+	{
+		if (whoopty.flags[2] == 1)
+			draw_field(whoopty, 0, 0);
 		charput(whoopty.string, whoopty.precision);
+		if (whoopty.flags[2] == 0)
+			draw_field(whoopty, 0, 0);
+	}
 	else if (whoopty.conversion == 'c')
+	{
+		if (whoopty.flags[2] == 1)
+			draw_field(whoopty, 0, 0);
 		charput(&whoopty.character, 1);
+		if (whoopty.flags[2] == 0)
+			draw_field(whoopty, 0, 0);
+	}
 }
 
 int ft_printf(const char *input, ...)
@@ -72,8 +98,7 @@ int ft_printf(const char *input, ...)
 		{
 			ft_bzero(&whoopty, sizeof(whoopty));
 			whoopty.precision = 1;
-			i += ft_printf_parse(&whoopty, input, &ap);
-			if (i == 0)
+			if ((ft_printf_parse(&whoopty, input, &ap)) == -1)
 				return (-1);
 			whoopty = def_type(whoopty, &ap);
 			conv_bridge(whoopty);
