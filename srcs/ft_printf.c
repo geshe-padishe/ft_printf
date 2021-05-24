@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/24 19:09:36 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/24 20:18:58 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@ int charput(char *character, int nb_char)
 	return (ret);
 }
 
-//void print_sc(char *flags, char conversion, int precision, va_list ap)
-//{
-//	if (conversion == 's')
-//		print_str(str, precision);
-//	if (conversion == 'c')
-//		ft_putchar(c);
-//}
-
 conv def_type(conv whoopty, va_list *ap)
 {
 	if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'c')
@@ -53,7 +45,9 @@ conv def_type(conv whoopty, va_list *ap)
 
 void conv_bridge(conv whoopty)
 {
-	if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
+	if (whoopty.conversion == 0)
+		draw_field(whoopty, 0, 0);
+	else if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		print_nb(whoopty.lnglng, 10, whoopty);
 	else if (whoopty.conversion == 'u')
 		print_nb(whoopty.un_lnglng, 10, whoopty);
@@ -93,13 +87,12 @@ int ft_printf(const char *input, ...)
 	while (input[i])
 	{
 		if (input[i] != '%')
-			write(1, &input[i], 1);
+			charput((char*)&input[i], 1);
 		else
 		{
 			ft_bzero(&whoopty, sizeof(whoopty));
 			whoopty.precision = 1;
-			if ((ft_printf_parse(&whoopty, input, &ap)) == -1)
-				return (-1);
+			ft_printf_parse(&whoopty, input, &ap);
 			whoopty = def_type(whoopty, &ap);
 			conv_bridge(whoopty);
 		}

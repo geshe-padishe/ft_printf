@@ -39,5 +39,3 @@ fclean:			clean
 				@make fclean -C $(LIBFT)
 
 re:				fclean all
-
-.PHONY: 		all fclean clean re
