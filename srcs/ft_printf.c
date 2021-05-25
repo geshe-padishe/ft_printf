@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/24 20:18:58 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:08:21 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ void conv_bridge(conv whoopty)
 	}
 }
 
+void print_conv(conv whoopty)
+{
+	int i = 0;
+	dprintf(1, "\n--------------------------------------\n");
+	for(i = 0; i < 5; i++)
+		dprintf(1, "flags[%d]:  %d\n", i, whoopty.flags[i]);
+	dprintf(1, "field width: %i\n", whoopty.fld_wdt);
+	dprintf(1, "precision: %i\n", whoopty.precision);
+	dprintf(1, "conversion: %c\n", whoopty.conversion);
+	dprintf(1, "whoopty.lnglng: %lli\n", whoopty.lnglng);
+	dprintf(1, "whoopty.unlnglng: %lli\n", whoopty.un_lnglng);
+	dprintf(1, "--------------------------------------\n");
+}
+
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
@@ -84,6 +98,8 @@ int ft_printf(const char *input, ...)
 
 	i = 0;
 	va_start(ap, input);
+	ft_bzero(&whoopty, sizeof(whoopty));
+	print_conv(whoopty);
 	while (input[i])
 	{
 		if (input[i] != '%')
@@ -92,8 +108,9 @@ int ft_printf(const char *input, ...)
 		{
 			ft_bzero(&whoopty, sizeof(whoopty));
 			whoopty.precision = 1;
-			ft_printf_parse(&whoopty, input, &ap);
+			i += ft_printf_parse(&whoopty, input + i, &ap);
 			whoopty = def_type(whoopty, &ap);
+			print_conv(whoopty);
 			conv_bridge(whoopty);
 		}
 		i++;
@@ -101,19 +118,6 @@ int ft_printf(const char *input, ...)
 	va_end(ap);
 	return (charput(NULL, 0));
 }
-
-//int print_conv(conv *whoopty)
-//{
-//	int i = 0;
-//	for(i = 0; i < 5; i++)
-//		printf("flags[%d]:  %d\n", i, whoopty->flags[i]);
-//	printf("field width: %i\n", whoopty->fld_wdt);
-//	printf("precision: %i\n", whoopty->precision);
-//	printf("conversion: %c\n", whoopty->conversion);
-//	printf("whoopty.lnglng: %lli\n", whoopty->lnglng);
-//	printf("whoopty.unlnglng: %lli\n", whoopty->un_lnglng);
-//	return 0;
-//}
 
 //void test_fct(conv *whoopty, int arg_ct, ...)
 //{

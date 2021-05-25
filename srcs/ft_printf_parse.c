@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/24 20:09:28 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/25 19:11:18 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ int flag_parse(const char *input, bool *flags)
 	return (i);
 }
 
+int conv_parse(const char *input, conv *whoopty)
+{
+	int j = 0;
+
+	while (j < 8)
+	{
+		if (*input == "sciduoxX"[j])
+		{
+			whoopty->conversion = "sciduoxX"[j];
+			return (1);
+		}
+		j++;
+	}
+	return (0);
+}
+
 int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 {
 	int i;
@@ -48,15 +64,19 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 	i = 0;
 	while (input[i])
 	{
+		printf("whoopty");
 		j = 0;
-		i += flag_parse(input, whoopty->flags);
-		if (input[i] >= 48 && input[i] <= 57)
+		if (flag_parse(input, whoopty->flags) > 0)
+			i += flag_parse(input, whoopty->flags);
+		else if (input[i] >= 48 && input[i] <= 57)
+		{
 			whoopty->fld_wdt = ft_atoi(&input[i]);
-		while (input[i] >= 48 && input[i] <= 57)
-			i++;
-		if (input[i] == '*' && (i = i + 1))
+			while (input[i] >= 48 && input[i] <= 57)
+				i++;
+		}
+		else if (input[i] == '*' && (i = i + 1))
 			whoopty->fld_wdt = va_arg(*ap, int);
-		if (input[i] == '.')
+		else if (input[i] == '.')
 		{
 			i++;
 			if (input[i] == '*' && (i = i + 1))
@@ -66,16 +86,13 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 			while (input[i] >= 48 && input[i] <= 57)
 				i++;
 		}
-		while (j < 8)
+		else if (conv_parse(input, whoopty))
 		{
-			if (input[i] == "sciduoxX"[j])
-			{
-				whoopty->conversion = "sciduoxX"[j];
-				return (i);
-			}
-			j++;
+			i++;
+			return (i);
 		}
-		i++;
+		else
+			return (i);
 	}
 	return (i);
 }
