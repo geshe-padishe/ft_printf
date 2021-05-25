@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/25 19:11:18 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/25 20:00:50 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,9 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 	i = 0;
 	while (input[i])
 	{
-		printf("whoopty");
 		j = 0;
-		if (flag_parse(input, whoopty->flags) > 0)
-			i += flag_parse(input, whoopty->flags);
+		if (flag_parse(input + i, whoopty->flags) > 0)
+			i += flag_parse(input + i, whoopty->flags);
 		else if (input[i] >= 48 && input[i] <= 57)
 		{
 			whoopty->fld_wdt = ft_atoi(&input[i]);
@@ -86,7 +85,7 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 			while (input[i] >= 48 && input[i] <= 57)
 				i++;
 		}
-		else if (conv_parse(input, whoopty))
+		else if (conv_parse(input + i, whoopty))
 		{
 			i++;
 			return (i);
@@ -94,5 +93,5 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 		else
 			return (i);
 	}
-	return (i);
+	return (1);
 }

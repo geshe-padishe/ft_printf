@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/25 19:08:21 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/25 20:04:27 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ int ft_printf(const char *input, ...)
 
 	i = 0;
 	va_start(ap, input);
-	ft_bzero(&whoopty, sizeof(whoopty));
-	print_conv(whoopty);
 	while (input[i])
 	{
 		if (input[i] != '%')
@@ -108,7 +106,7 @@ int ft_printf(const char *input, ...)
 		{
 			ft_bzero(&whoopty, sizeof(whoopty));
 			whoopty.precision = 1;
-			i += ft_printf_parse(&whoopty, input + i, &ap);
+			i += ft_printf_parse(&whoopty, input + i + 1, &ap);
 			whoopty = def_type(whoopty, &ap);
 			print_conv(whoopty);
 			conv_bridge(whoopty);
