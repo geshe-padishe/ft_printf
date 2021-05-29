@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/24 19:53:47 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/29 19:25:29 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "ft_printf.h"
+
+int ft_small_nb(int nb1, int nb2)
+{
+	if (nb1 < nb2)
+		return (nb1);
+	return (nb2);
+}
 
 int nb_digites(long long nb, int base)
 {
@@ -105,8 +112,13 @@ int options_length(bool *flags, int base, long long nb)
 
 void draw_field(conv whoopty, int nb_digits, int options_length)
 {
+	if (whoopty.conversion == 0)
+		whoopty.precision = 1;
 	if (nb_digits > whoopty.precision)
 		whoopty.precision = nb_digits;
+	if (whoopty.conversion == 's')
+		if (whoopty.precision > (int)ft_strlen(whoopty.string))
+			whoopty.precision = (int)ft_strlen(whoopty.string);
 	while (whoopty.fld_wdt > whoopty.precision + options_length)
 	{
 		if (whoopty.flags[1] == 1)

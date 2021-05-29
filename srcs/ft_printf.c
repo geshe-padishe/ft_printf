@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/25 20:04:27 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/29 19:40:47 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ void conv_bridge(conv whoopty)
 		print_nb(whoopty.un_lnglng, 8, whoopty);
 	else if (whoopty.conversion == 's')
 	{
-		if (whoopty.flags[2] == 1)
-			draw_field(whoopty, 0, 0);
-		charput(whoopty.string, whoopty.precision);
 		if (whoopty.flags[2] == 0)
+			draw_field(whoopty, 0, 0);
+		charput(whoopty.string, ft_small_nb(ft_strlen(whoopty.string), whoopty.precision));
+		if (whoopty.flags[2] == 1)
 			draw_field(whoopty, 0, 0);
 	}
 	else if (whoopty.conversion == 'c')
@@ -89,6 +89,14 @@ void print_conv(conv whoopty)
 	dprintf(1, "--------------------------------------\n");
 }
 
+void flag_peacemaker(bool *flags)
+{
+	if (flags[2] == 1)
+		flags[1] = 0;
+	if (flags[4] == 1)
+		flags[3] = 0;
+}
+
 int ft_printf(const char *input, ...)
 {
 	va_list ap;
@@ -100,15 +108,19 @@ int ft_printf(const char *input, ...)
 	va_start(ap, input);
 	while (input[i])
 	{
-		if (input[i] != '%')
-			charput((char*)&input[i], 1);
+		if (input[i] != '%' && (i = i + 1))
+			charput((char*)&input[i - 1], 1);
+		else if (input[i + 1] == '%' && (i = i + 1))
+			charput("%", 1);
 		else
 		{
 			ft_bzero(&whoopty, sizeof(whoopty));
-			whoopty.precision = 1;
 			i += ft_printf_parse(&whoopty, input + i + 1, &ap);
+			flag_peacemaker(whoopty.flags);
+			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
+				charput((char*)&input[i], 1);
 			whoopty = def_type(whoopty, &ap);
-			print_conv(whoopty);
+			//print_conv(whoopty);
 			conv_bridge(whoopty);
 		}
 		i++;
