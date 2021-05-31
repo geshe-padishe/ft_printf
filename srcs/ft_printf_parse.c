@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/25 20:00:50 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/31 16:28:15 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 			i++;
 			if (input[i] == '*' && (i = i + 1))
 				whoopty->precision = va_arg(*ap, int);
-			else
+			else if (input[i] >= 48 && input[i] <= 57)
 				whoopty->precision = ft_atoi(&input[i]);
 			while (input[i] >= 48 && input[i] <= 57)
 				i++;
@@ -93,5 +93,5 @@ int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 		else
 			return (i);
 	}
-	return (1);
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/29 19:40:47 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/05/31 16:48:00 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ conv def_type(conv whoopty, va_list *ap)
 		whoopty.string = va_arg(*ap, char*);
 	else if (whoopty.conversion == 'c')
 		whoopty.character = (char)va_arg(*ap, int);
-	else
+	else if (whoopty.conversion == 'x' || whoopty.conversion == 'X' || whoopty.conversion == 'o' || whoopty.conversion == 'u')
 		whoopty.un_lnglng = va_arg(*ap, unsigned long long);
 	return (whoopty);
 }
@@ -114,16 +114,16 @@ int ft_printf(const char *input, ...)
 			charput("%", 1);
 		else
 		{
+			i++;
 			ft_bzero(&whoopty, sizeof(whoopty));
-			i += ft_printf_parse(&whoopty, input + i + 1, &ap);
+			i += ft_printf_parse(&whoopty, input + i, &ap);
 			flag_peacemaker(whoopty.flags);
 			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
-				charput((char*)&input[i], 1);
+				charput((char*)&input[i - 1], 1);
 			whoopty = def_type(whoopty, &ap);
 			//print_conv(whoopty);
 			conv_bridge(whoopty);
 		}
-		i++;
 	}
 	va_end(ap);
 	return (charput(NULL, 0));
