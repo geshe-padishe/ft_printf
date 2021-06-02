@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/02 12:49:40 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:45:45 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 
 int ft_small_nb(int nb1, int nb2)
 {
+	if (nb1 < 0)
+		return (nb2);
+	if (nb2 < 0)
+		return (nb1);
 	if (nb1 < nb2)
 		return (nb1);
 	return (nb2);

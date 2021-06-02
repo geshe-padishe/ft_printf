@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/31 16:48:39 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:38:46 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,40 @@ int main(int argc, char **argv)
 	conv whoopty;
 
 	dprintf(1, "my_printf: ");
-	ret = ft_printf(argv[1], argv[2], argv[3][0]);
+	ret = ft_printf(argv[1], argv[2]);
 	printf("%%\n");
 	printf("rl_printf: ");
-	ret2 = printf(argv[1], argv[2], argv[3][0]);
+	ret2 = printf(argv[1], argv[2]);
 	printf("%%\n");
 	printf("my_printf: %d\n", ret);
 	printf("rl_printf: %d\n", ret2);
 }
+
+
+
+
+
+
+
+
+
+
+
+//		s
+//		2
+//		4-5
+//		7-15
+//		34-36
+//		
+//		d
+//		1
+//		13-14
+//		16-18
+//		45-47
+//		49-51
+//		53-55
+//		57-59
+//		61-63
+//		65-68
+//		72-74
+//		81-83

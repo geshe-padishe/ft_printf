@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/02 12:53:03 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/02 19:46:23 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int charput(char *character, int nb_char)
 
 conv def_type(conv whoopty, va_list *ap)
 {
-	if (whoopty.conversion == 'd' || whoopty.conversion == 'i' || whoopty.conversion == 'c')
+	if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		whoopty.lnglng = va_arg(*ap, int);
 	else if (whoopty.conversion == 's')
 		whoopty.string = va_arg(*ap, char*);
@@ -45,7 +45,7 @@ conv def_type(conv whoopty, va_list *ap)
 
 void conv_bridge(conv whoopty, char c)
 {
-	if (whoopty.conversion == 0 && c)
+	if (whoopty.conversion == 0 && !c)
 		draw_field(whoopty, 0, 0);
 	else if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		print_nb(whoopty.lnglng, 10, whoopty);
@@ -67,10 +67,10 @@ void conv_bridge(conv whoopty, char c)
 	}
 	else if (whoopty.conversion == 'c')
 	{
-		if (whoopty.flags[2] == 1)
+		if (whoopty.flags[2] == 0)
 			draw_field(whoopty, 0, 0);
 		charput(&whoopty.character, 1);
-		if (whoopty.flags[2] == 0)
+		if (whoopty.flags[2] == 1)
 			draw_field(whoopty, 0, 0);
 	}
 }
@@ -86,6 +86,7 @@ void print_conv(conv whoopty)
 	dprintf(1, "conversion: %c\n", whoopty.conversion);
 	dprintf(1, "whoopty.lnglng: %lli\n", whoopty.lnglng);
 	dprintf(1, "whoopty.unlnglng: %lli\n", whoopty.un_lnglng);
+	dprintf(1, "whoopty.character: %c\n", whoopty.character);
 	dprintf(1, "--------------------------------------\n");
 }
 
@@ -116,12 +117,17 @@ int ft_printf(const char *input, ...)
 		{
 			i++;
 			ft_bzero(&whoopty, sizeof(whoopty));
+			whoopty.precision = -1;
 			i += ft_printf_parse(&whoopty, input + i, &ap);
+			if (whoopty.fld_wdt < 0)
+			{
+				whoopty.fld_wdt *= -1;
+				whoopty.flags[2] = 1;
+			}
 			flag_peacemaker(whoopty.flags);
 			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
 				charput((char*)&input[i - 1], 1);
 			whoopty = def_type(whoopty, &ap);
-			//print_conv(whoopty);
 			conv_bridge(whoopty, input[i]);
 		}
 	}
