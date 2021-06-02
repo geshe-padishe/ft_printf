@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/31 16:48:00 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/02 12:53:03 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ conv def_type(conv whoopty, va_list *ap)
 	return (whoopty);
 }
 
-void conv_bridge(conv whoopty)
+void conv_bridge(conv whoopty, char c)
 {
-	if (whoopty.conversion == 0)
+	if (whoopty.conversion == 0 && c)
 		draw_field(whoopty, 0, 0);
 	else if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		print_nb(whoopty.lnglng, 10, whoopty);
@@ -122,7 +122,7 @@ int ft_printf(const char *input, ...)
 				charput((char*)&input[i - 1], 1);
 			whoopty = def_type(whoopty, &ap);
 			//print_conv(whoopty);
-			conv_bridge(whoopty);
+			conv_bridge(whoopty, input[i]);
 		}
 	}
 	va_end(ap);

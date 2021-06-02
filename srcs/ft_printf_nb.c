@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/29 19:25:29 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/02 12:49:40 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 		whoopty.precision = 1;
 	if (nb_digits > whoopty.precision)
 		whoopty.precision = nb_digits;
+	if (whoopty.conversion == 'c')
+		whoopty.precision++;
 	if (whoopty.conversion == 's')
 		if (whoopty.precision > (int)ft_strlen(whoopty.string))
 			whoopty.precision = (int)ft_strlen(whoopty.string);
