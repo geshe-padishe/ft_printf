@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/03 18:13:00 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/03 20:12:24 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,15 +118,14 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 {
 	if (whoopty.conversion == 0)
 		whoopty.precision = 1;
-	if (nb_digits > whoopty.precision)
-		whoopty.precision = nb_digits;
 	if (whoopty.conversion == 'c')
 		whoopty.precision = 1;
 	if (whoopty.conversion == 's')
 		whoopty.precision = ft_small_nb(whoopty.precision, (int)ft_strlen(whoopty.string));
-	while (whoopty.fld_wdt > whoopty.precision + options_length)
+	while (whoopty.fld_wdt > whoopty.precision + options_length &&
+			whoopty.fld_wdt > nb_digits + options_length)
 	{
-		if (whoopty.flags[1] == 1)
+		if (whoopty.flags[1] == 1 && whoopty.precision < 0)
 			charput("0", 1);
 		else
 			charput(" ", 1);
@@ -145,11 +144,13 @@ void print_nb(long long nb, int base, conv whoopty)
 	abs_base = abs_value(base);
 	nb_s = abs_value(nb);
 	nb_digits = nb_digites(nb_s, abs_base);
+	if (nb < 0 && whoopty.precision < 0)
+		charput("-", 1);
 	if (whoopty.flags[2] == 0)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
-	if (nb < 0)
-		charput("-", 1);
 	print_nb_options(whoopty.flags, base, nb);
+	if (nb < 0 && whoopty.precision >= 0)
+		charput("-", 1);
 	while (precision-- > nb_digits)
 		charput("0", 1);
 	nb_s = abs_value(nb);
