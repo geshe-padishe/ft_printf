@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/02 19:38:46 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/03 18:43:19 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,32 @@ int main(int argc, char **argv)
 	conv whoopty;
 
 	dprintf(1, "my_printf: ");
-	ret = ft_printf(argv[1], argv[2]);
+	ret = ft_printf(" 0*%0-*.*d*0 0*%0*.*d*0 ", 2, 6, 102, 21, 10, -101);
 	printf("%%\n");
 	printf("rl_printf: ");
-	ret2 = printf(argv[1], argv[2]);
+	ret2 = printf(" 0*%0-*.*d*0 0*%0*.*d*0 ", 2, 6, 102, 21, 10, -101);
 	printf("%%\n");
 	printf("my_printf: %d\n", ret);
 	printf("rl_printf: %d\n", ret2);
+	printf("--------------------------------------------------\n");
+//	dprintf(1, "my_printf: ");
+//	ret = ft_printf(argv[1], 1);
+//	printf("%%\n");
+//	printf("rl_printf: ");
+//	ret2 = printf(argv[1], 1);
+//	printf("%%\n");
+//	printf("my_printf: %d\n", ret);
+//	printf("rl_printf: %d\n", ret2);
+
 }
 
 
 
 
-
+//		s2
+//		7-16
+//		25-27
+//		34-36
 
 
 
@@ -47,7 +60,7 @@ int main(int argc, char **argv)
 //		34-36
 //		
 //		d
-//		1
+//		1     //
 //		13-14
 //		16-18
 //		45-47

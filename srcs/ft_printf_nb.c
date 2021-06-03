@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/02 19:45:45 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/03 18:13:00 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,9 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 	if (nb_digits > whoopty.precision)
 		whoopty.precision = nb_digits;
 	if (whoopty.conversion == 'c')
-		whoopty.precision++;
+		whoopty.precision = 1;
 	if (whoopty.conversion == 's')
-		if (whoopty.precision > (int)ft_strlen(whoopty.string))
-			whoopty.precision = (int)ft_strlen(whoopty.string);
+		whoopty.precision = ft_small_nb(whoopty.precision, (int)ft_strlen(whoopty.string));
 	while (whoopty.fld_wdt > whoopty.precision + options_length)
 	{
 		if (whoopty.flags[1] == 1)
@@ -154,7 +153,7 @@ void print_nb(long long nb, int base, conv whoopty)
 	while (precision-- > nb_digits)
 		charput("0", 1);
 	nb_s = abs_value(nb);
-	if (nb_s != 0 || whoopty.precision > 0)
+	if (nb != 0 || whoopty.precision != 0)
 		write_digits(nb_s, base);
 	if (whoopty.flags[2] == 1)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
