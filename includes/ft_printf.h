@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/05/29 19:08:27 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/04 18:49:46 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct	conv
 	char conversion;
 	bool flags[5];
 	long long lnglng;
-	unsigned long long un_lnglng;
+	unsigned int un_lnglng;
 	char *string;
 	char character;
 }				conv;
@@ -52,7 +52,7 @@ void print_sc(bool *flags, char conversion, int precision, va_list ap);
 int ft_printf(const char *input, ...);
 void flag_peacemaker(bool *flags);
 void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i);
-int charput(char *character, int nb_char);
+int charput(char *character, int nb_char, bool reset);
 int ft_small_nb(int nb1, int nb2);
 
 #endif

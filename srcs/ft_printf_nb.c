@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/03 20:12:24 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/04 20:12:23 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,33 +54,33 @@ void write_digits(long long nb, int base)
 	if (nb >= abs_base)
 		write_digits(nb / abs_base, base);
 	if (base == 16)
-		charput(&"0123456789abcdef"[nb % 16], 1);
+		charput(&"0123456789abcdef"[nb % 16], 1, 0);
 	else if (base == -16)
-		charput(&"0123456789ABCDEF"[nb % 16], 1);
+		charput(&"0123456789ABCDEF"[nb % 16], 1, 0);
 	else if (base == 8)
-		charput(&"01234567"[nb % 8], 1);
+		charput(&"01234567"[nb % 8], 1, 0);
 	else
-	   charput(&"0123456789"[nb % 10], 1);
+	   charput(&"0123456789"[nb % 10], 1, 0);
 }
 
 void print_nb_options(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
-			charput("0x", 2);
+			charput("0x", 2, 0);
 	if (base == -16)
 		if (flags[0] == 1)
-			charput("0X", 2);
+			charput("0X", 2, 0);
 	if (base == 8 && flags[0] == 1)
-		charput("0", 1);
+		charput("0", 1, 0);
 	if (base == 10)
 	{
 		if (flags[4] == 1)
 			if (nb > 0)
-				charput(" ", 1);
+				charput(" ", 1, 0);
 		if (flags[3] == 1)
 			if (nb >= 0)
-				charput("+", 1);
+				charput("+", 1, 0);
 	}
 }
 
@@ -126,9 +126,9 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 			whoopty.fld_wdt > nb_digits + options_length)
 	{
 		if (whoopty.flags[1] == 1 && whoopty.precision < 0)
-			charput("0", 1);
+			charput("0", 1, 0);
 		else
-			charput(" ", 1);
+			charput(" ", 1, 0);
 		whoopty.fld_wdt--;
 	}
 }
@@ -144,15 +144,17 @@ void print_nb(long long nb, int base, conv whoopty)
 	abs_base = abs_value(base);
 	nb_s = abs_value(nb);
 	nb_digits = nb_digites(nb_s, abs_base);
-	if (nb < 0 && whoopty.precision < 0)
-		charput("-", 1);
+	if (nb < 0 && whoopty.precision < 0 && whoopty.flags[1] == 1)
+		charput("-", 1, 0);
+	if (nb == 0 && whoopty.precision == 0)
+		whoopty.fld_wdt++;
 	if (whoopty.flags[2] == 0)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 	print_nb_options(whoopty.flags, base, nb);
 	if (nb < 0 && whoopty.precision >= 0)
-		charput("-", 1);
+		charput("-", 1, 0);
 	while (precision-- > nb_digits)
-		charput("0", 1);
+		charput("0", 1, 0);
 	nb_s = abs_value(nb);
 	if (nb != 0 || whoopty.precision != 0)
 		write_digits(nb_s, base);

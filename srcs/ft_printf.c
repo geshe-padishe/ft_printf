@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/03 18:30:36 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/04 18:51:33 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@ void print_conv(conv whoopty)
 	dprintf(1, "precision: %i\n", whoopty.precision);
 	dprintf(1, "conversion: %c\n", whoopty.conversion);
 	dprintf(1, "whoopty.lnglng: %lli\n", whoopty.lnglng);
-	dprintf(1, "whoopty.unlnglng: %lli\n", whoopty.un_lnglng);
+	dprintf(1, "whoopty.unlnglng: %u\n", whoopty.un_lnglng);
 	dprintf(1, "whoopty.character: %c\n", whoopty.character);
 	dprintf(1, "whoopty.string: %s\n", whoopty.string);
 	dprintf(1, "--------------------------------------\n");
 }
 
-int charput(char *character, int nb_char)
+int charput(char *character, int nb_char, bool reset)
 {
 	static int ret = 0;
 
+	if (reset == 1)
+		ret = 0;
 	if (nb_char > 0)
 	{
 		ret += nb_char;
@@ -51,7 +53,11 @@ conv def_type(conv whoopty, va_list *ap)
 	if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		whoopty.lnglng = va_arg(*ap, int);
 	else if (whoopty.conversion == 's')
+	{
 		whoopty.string = va_arg(*ap, char*);
+		if (whoopty.string == NULL)
+			whoopty.string = "(null)";
+	}
 	else if (whoopty.conversion == 'c')
 		whoopty.character = (char)va_arg(*ap, int);
 	else if (whoopty.conversion == 'x' || whoopty.conversion == 'X' || whoopty.conversion == 'o' || whoopty.conversion == 'u')
@@ -77,7 +83,7 @@ void conv_bridge(conv whoopty, char c)
 	{
 		if (whoopty.flags[2] == 0)
 			draw_field(whoopty, -1, 0);
-		charput(whoopty.string, ft_small_nb(ft_strlen(whoopty.string), whoopty.precision));
+		charput(whoopty.string, ft_small_nb(ft_strlen(whoopty.string), whoopty.precision), 0);
 		if (whoopty.flags[2] == 1)
 			draw_field(whoopty, -1, 0);
 	}
@@ -85,7 +91,7 @@ void conv_bridge(conv whoopty, char c)
 	{
 		if (whoopty.flags[2] == 0)
 			draw_field(whoopty, -1, 0);
-		charput(&whoopty.character, 1);
+		charput(&whoopty.character, 1, 0);
 		if (whoopty.flags[2] == 1)
 			draw_field(whoopty, -1, 0);
 	}
@@ -105,16 +111,20 @@ int ft_printf(const char *input, ...)
 	int i;
 	conv whoopty;
 
-	if (!input)
+	if (!*input)
 		return (0);
 	i = 0;
 	va_start(ap, input);
+	charput(NULL, 0, 1);
 	while (input[i])
 	{
 		if (input[i] != '%' && (i = i + 1))
-			charput((char*)&input[i - 1], 1);
-		else if (input[i + 1] == '%' && (i = i + 1))
-			charput("%", 1);
+			charput((char*)&input[i - 1], 1, 0);
+		else if (input[i + 1] == '%')
+		{
+			charput("%", 1, 0);
+			i += 2;
+		}
 		else
 		{
 			i++;
@@ -127,15 +137,15 @@ int ft_printf(const char *input, ...)
 				whoopty.flags[2] = 1;
 			}
 			flag_peacemaker(whoopty.flags);
-			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
-				charput((char*)&input[i - 1], 1);
-			whoopty = def_type(whoopty, &ap);
 			//print_conv(whoopty);
+			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
+				charput((char*)&input[i - 1], 1, 0);
+			whoopty = def_type(whoopty, &ap);
 			conv_bridge(whoopty, input[i]);
 		}
 	}
 	va_end(ap);
-	return (charput(NULL, 0));
+	return (charput(NULL, 0, 0));
 }
 
 //void test_fct(conv *whoopty, int arg_ct, ...)

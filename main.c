@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/03 20:14:00 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/04 20:02:07 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int main(int argc, char **argv)
 	conv whoopty;
 
 	dprintf(1, "my_printf: ");
-	ret = ft_printf(" --0*%0*.0d*0 0*%0*.10d*0-- ", -2, 0, 21, 1);
+	ret = ft_printf(argv[1], -2147483647);
 	printf("%%\n");
 	printf("rl_printf: ");
-	ret2 = printf(" --0*%0*.0d*0 0*%0*.10d*0-- ", -2, 0, 21, 1);
+	ret2 = printf(argv[1], -2147483647);
 	printf("%%\n");
 	printf("my_printf: %d\n", ret);
 	printf("rl_printf: %d\n", ret2);
@@ -48,9 +48,20 @@ int main(int argc, char **argv)
 //		25-27
 //		34-36
 
+//		u x X
+//		9-13
+//		18
+//
+//		%
+//		1-5
+//		7
+//
 
-
-
+//		mix
+//		8
+//		14
+//		28
+//
 
 
 //		s
