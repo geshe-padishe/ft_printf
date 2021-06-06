@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/04 18:49:46 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:43:05 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	conv
 	unsigned int un_lnglng;
 	char *string;
 	char character;
+	void *ptr;
 }				conv;
 
 void draw_field(conv whoopty, int nb_digits, int options_length);

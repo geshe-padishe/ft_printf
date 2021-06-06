@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/04 20:12:23 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/06 14:18:24 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void print_nb(long long nb, int base, conv whoopty)
 	if (whoopty.flags[2] == 0)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 	print_nb_options(whoopty.flags, base, nb);
-	if (nb < 0 && whoopty.precision >= 0)
+	if (nb < 0 && (whoopty.flags[1] == 0 || whoopty.precision >= 0))
 		charput("-", 1, 0);
 	while (precision-- > nb_digits)
 		charput("0", 1, 0);

@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/04 18:51:33 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/06 15:46:57 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ conv def_type(conv whoopty, va_list *ap)
 	else if (whoopty.conversion == 'c')
 		whoopty.character = (char)va_arg(*ap, int);
 	else if (whoopty.conversion == 'x' || whoopty.conversion == 'X' || whoopty.conversion == 'o' || whoopty.conversion == 'u')
-		whoopty.un_lnglng = va_arg(*ap, unsigned long long);
+		whoopty.un_lnglng = va_arg(*ap, unsigned int);
+	else if (whoopty.conversion == 'p')
+		whoopty.ptr = va_arg(*ap, void*);
 	return (whoopty);
 }
 
 void conv_bridge(conv whoopty, char c)
 {
-	if (whoopty.conversion == 0 && !c)
+	if (whoopty.conversion == 0 && c)
 		draw_field(whoopty, 0, 0);
 	else if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		print_nb(whoopty.lnglng, 10, whoopty);
@@ -79,6 +81,11 @@ void conv_bridge(conv whoopty, char c)
 		print_nb(whoopty.un_lnglng, -16, whoopty);
 	else if (whoopty.conversion == 'o')
 		print_nb(whoopty.un_lnglng, 8, whoopty);
+	else if (whoopty.conversion == 'p')
+	{
+		whoopty.flags[0] = 1;
+		print_nb((unsigned long)whoopty.ptr, 16, whoopty);
+	}
 	else if (whoopty.conversion == 's')
 	{
 		if (whoopty.flags[2] == 0)
