@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/06 15:46:57 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/07 15:28:35 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void print_conv(conv whoopty)
 	dprintf(1, "whoopty.unlnglng: %u\n", whoopty.un_lnglng);
 	dprintf(1, "whoopty.character: %c\n", whoopty.character);
 	dprintf(1, "whoopty.string: %s\n", whoopty.string);
+	dprintf(1, "whoopty.ptr: %lu\n", whoopty.ptr);
 	dprintf(1, "--------------------------------------\n");
 }
 
@@ -63,7 +64,7 @@ conv def_type(conv whoopty, va_list *ap)
 	else if (whoopty.conversion == 'x' || whoopty.conversion == 'X' || whoopty.conversion == 'o' || whoopty.conversion == 'u')
 		whoopty.un_lnglng = va_arg(*ap, unsigned int);
 	else if (whoopty.conversion == 'p')
-		whoopty.ptr = va_arg(*ap, void*);
+		whoopty.ptr = (unsigned long)va_arg(*ap, void*);
 	return (whoopty);
 }
 
@@ -84,7 +85,7 @@ void conv_bridge(conv whoopty, char c)
 	else if (whoopty.conversion == 'p')
 	{
 		whoopty.flags[0] = 1;
-		print_nb((unsigned long)whoopty.ptr, 16, whoopty);
+		print_nb(whoopty.ptr, 16, whoopty);
 	}
 	else if (whoopty.conversion == 's')
 	{
@@ -144,10 +145,10 @@ int ft_printf(const char *input, ...)
 				whoopty.flags[2] = 1;
 			}
 			flag_peacemaker(whoopty.flags);
-			//print_conv(whoopty);
 			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
 				charput((char*)&input[i - 1], 1, 0);
 			whoopty = def_type(whoopty, &ap);
+			//print_conv(whoopty);
 			conv_bridge(whoopty, input[i]);
 		}
 	}

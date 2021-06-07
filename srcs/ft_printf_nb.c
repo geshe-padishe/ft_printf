@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/06 14:18:24 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/07 15:29:23 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ int nb_digites(long long nb, int base)
 	return (nb_digits);
 }
 
+int nb_undigites(unsigned long nb)
+{
+	int nb_digits;
+
+	nb_digits = 1;
+	while ((nb = nb / 16) > 0)
+		nb_digits++;
+	return (nb_digits);
+}
+
 long long abs_value(long long nb)
 {
 	if (nb < 0)
@@ -61,6 +71,13 @@ void write_digits(long long nb, int base)
 		charput(&"01234567"[nb % 8], 1, 0);
 	else
 	   charput(&"0123456789"[nb % 10], 1, 0);
+}
+
+void write_undigits(unsigned long nb)
+{
+	if (nb >= 16)
+		write_undigits(nb / 16);
+	charput(&"0123456789abcdef"[nb % 16], 1, 0);
 }
 
 void print_nb_options(bool *flags, int base, long long nb)
