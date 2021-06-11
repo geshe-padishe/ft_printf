@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/07 15:28:35 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/11 16:12:08 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int ft_printf(const char *input, ...)
 				whoopty.flags[2] = 1;
 			}
 			flag_peacemaker(whoopty.flags);
-			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
+			if (input[i] && whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
 				charput((char*)&input[i - 1], 1, 0);
 			whoopty = def_type(whoopty, &ap);
 			//print_conv(whoopty);
