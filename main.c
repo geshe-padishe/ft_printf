@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/13 13:27:58 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:54:22 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int main(int argc, char **argv)
 	conv whoopty;
 
 	dprintf(1, "my_printf: ");
-	ret = ft_printf("Vsd%-.*X", -7, 2147483647);
+	ret = ft_printf("\\!/%28lc\\!/", 'd');
 	printf("%%\n");
 	printf("rl_printf: ");
-	ret2 = printf("Vsd%-.*X", -7, 2147483647);
+	ret2 = printf("\\!/%28lc\\!/", 'd');
 	printf("%%\n");
 	printf("my_printf: %d\n", ret);
 	printf("rl_printf: %d\n", ret2);
@@ -39,7 +39,9 @@ int main(int argc, char **argv)
 //	printf("rl_printf: %d\n", ret2);
 
 }
-
+//		TEST(13, print(" %p %p ", -9223372036854775808, 9223372036854775807));
+//		TEST(14, print(" %p %p ", -2147483648, 2147483647));
+//		TEST(15, print(" %p %p ", 0, -18446744073709551615));
 //		p
 //		13
 //		15

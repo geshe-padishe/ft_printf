@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/13 13:37:37 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:47:51 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void conv_bridge(conv whoopty, char c)
 	else if (whoopty.conversion == 'p')
 	{
 		whoopty.flags[0] = 1;
-		print_nb(whoopty.ptr, 16, whoopty);
+		print_nb(1, 16, whoopty);
 	}
 	else if (whoopty.conversion == 's')
 	{
@@ -119,7 +119,7 @@ int ft_printf(const char *input, ...)
 	int i;
 	conv whoopty;
 
-	if (!*input)
+	if (!input || !*input)
 		return (0);
 	i = 0;
 	va_start(ap, input);

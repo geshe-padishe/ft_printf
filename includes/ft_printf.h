@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/07 11:55:36 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/13 15:18:50 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ void flag_peacemaker(bool *flags);
 void prec_wdt(const char *input, conv *whoopty, va_list *ap, int *i);
 int charput(char *character, int nb_char, bool reset);
 int ft_small_nb(int nb1, int nb2);
+void write_undigits(unsigned long nb);
+int nb_undigites(unsigned long nb);
 
 #endif
