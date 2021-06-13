@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/06 15:49:02 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/13 13:36:19 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int conv_parse(const char *input, conv *whoopty)
 {
 	int j = 0;
 
-	while (j < 8)
+	while (j < 9)
 	{
 		if (*input == "scpiduoxX"[j])
 		{
