@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/13 15:47:51 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/14 18:52:28 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ conv def_type(conv whoopty, va_list *ap)
 
 void conv_bridge(conv whoopty, char c)
 {
-	if (whoopty.conversion == 0 && c)
+	c = 0;
+	if (whoopty.conversion == 0)
 		draw_field(whoopty, 0, 0);
 	else if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		print_nb(whoopty.lnglng, 10, whoopty);
@@ -133,6 +134,8 @@ int ft_printf(const char *input, ...)
 			charput("%", 1, 0);
 			i += 2;
 		}
+		else if (input[i + 1] == 0 && (i = i + 1))
+			return (charput("%", 1, 0));
 		else
 		{
 			i++;
@@ -145,10 +148,10 @@ int ft_printf(const char *input, ...)
 				whoopty.flags[2] = 1;
 			}
 			flag_peacemaker(whoopty.flags);
-			if (whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
+			if (input[i] && whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
 				charput((char*)&input[i - 1], 1, 0);
 			whoopty = def_type(whoopty, &ap);
-			//print_conv(whoopty);
+			print_conv(whoopty);
 			conv_bridge(whoopty, input[i]);
 		}
 	}
