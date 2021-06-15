@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/14 17:41:51 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/15 19:51:29 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int main(int argc, char **argv)
 	conv whoopty;
 
 	dprintf(1, "my_printf: ");
-	ret = ft_printf(argv[1]);
+	ret = ft_printf(argv[1], "hi low");
 	printf("%%\n");
 	printf("rl_printf: ");
-	ret2 = printf(argv[1]);
+	ret2 = printf(argv[1], "hi low");
 	printf("%%\n");
 	printf("my_printf: %d\n", ret);
 	printf("rl_printf: %d\n", ret2);

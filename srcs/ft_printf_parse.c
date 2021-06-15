@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/13 13:36:19 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/15 19:05:39 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ int conv_parse(const char *input, conv *whoopty)
 int ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 {
 	int i;
-	int j;
 
 	i = 0;
 	while (input[i])
 	{
-		j = 0;
 		if (flag_parse(input + i, whoopty->flags) > 0)
 			i += flag_parse(input + i, whoopty->flags);
 		else if (input[i] >= 48 && input[i] <= 57)

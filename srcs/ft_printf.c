@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/14 18:52:28 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/15 20:00:45 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ conv def_type(conv whoopty, va_list *ap)
 
 void conv_bridge(conv whoopty, char c)
 {
-	c = 0;
-	if (whoopty.conversion == 0)
+	if (whoopty.conversion == 0 && c)
 		draw_field(whoopty, 0, 0);
 	else if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		print_nb(whoopty.lnglng, 10, whoopty);
@@ -134,25 +133,33 @@ int ft_printf(const char *input, ...)
 			charput("%", 1, 0);
 			i += 2;
 		}
-		else if (input[i + 1] == 0 && (i = i + 1))
+		else if (input[i + 1] == 0)
 			return (charput("%", 1, 0));
 		else
 		{
+			//printf("|| input[%d] = %c ||\n", i, input[i]);
 			i++;
 			ft_bzero(&whoopty, sizeof(whoopty));
 			whoopty.precision = -1;
+			//printf("i = %d\n", i);
 			i += ft_printf_parse(&whoopty, input + i, &ap);
+			//printf("i = %d\n", i);
 			if (whoopty.fld_wdt < 0)
 			{
 				whoopty.fld_wdt *= -1;
 				whoopty.flags[2] = 1;
 			}
 			flag_peacemaker(whoopty.flags);
-			if (input[i] && whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
-				charput((char*)&input[i - 1], 1, 0);
 			whoopty = def_type(whoopty, &ap);
-			print_conv(whoopty);
-			conv_bridge(whoopty, input[i]);
+			if (input[i] && whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
+			{
+				charput((char*)&input[i - 1], 1, 0);
+				conv_bridge(whoopty, input[i - 1]);
+			}
+			else
+				conv_bridge(whoopty, input[i]);
+			//print_conv(whoopty);
+			//printf("|| input[%d] = %c ||\n", i, input[i]);
 		}
 	}
 	va_end(ap);
