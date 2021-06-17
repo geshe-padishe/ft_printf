@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/16 17:38:06 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/17 15:38:22 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void print_nb(long long nb, int base, conv whoopty)
 		nb_digits = nb_digites(nb_s, abs_base);
 	else
 		nb_digits = nb_undigites(whoopty.ptr);
-	if (nb < 0 && whoopty.precision < 0 && whoopty.flags[1] == 1 && whoopty.conversion != 'p')
+	if (nb < 0 && precision < 0 && whoopty.flags[1] == 1 && whoopty.conversion != 'p')
 		charput("-", 1, 0);
 	if (nb == 0 && whoopty.precision == 0)
 		whoopty.fld_wdt++;
@@ -180,7 +180,7 @@ void print_nb(long long nb, int base, conv whoopty)
 	nb_s = abs_value(nb);
 	if ((nb != 0 || whoopty.precision != 0) && whoopty.conversion != 'p')
 		write_digits(nb_s, base);
-	else if (whoopty.conversion == 'p' && (whoopty.ptr != 0 || whoopty.precision != 0))
+	else if (whoopty.conversion == 'p' && (whoopty.ptr != 0 || precision != 0))
 		write_undigits(whoopty.ptr);
 	if (whoopty.flags[2] == 1)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
