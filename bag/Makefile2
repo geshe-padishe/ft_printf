@@ -6,14 +6,9 @@ CFLAGS			= -Wall -Wextra -Werror
 FLAGS			= -L ${LIBFT_D} -lft
 RM				= rm -f
 
-SRC_D			= srcs
 SRCS_LIST		= ft_printf.c ft_printf_nb.c ft_printf_parse.c
-SRC_C			= $(addprefix ${SRC_D}/, ${SRCS_LIST})
 
-INC_D			= includes
-HEADER			= ft_printf.h
-
-OBJS			= ${SRC_C:.c=.o}
+OBJS			= ${SRCS:.c=.o}
 
 LIBFT_D			= dyn_libft
 
@@ -24,7 +19,7 @@ ${NAME}:		${OBJS}
 				${CC} ${CFLAGS} ${OBJS} ${FLAGS} -o ${NAME}
 
 %.o: %.c
-				${CC} ${CFLAGS} -I${INC_D} -c $< -o ${<:.c=.o}
+				${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 clean:
 				$(MAKE) -C ${LIBFT_D} clean
