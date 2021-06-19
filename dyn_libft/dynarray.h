@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 12:19:38 by nikotikch         #+#    #+#             */
-/*   Updated: 2020/12/15 20:25:48 by nikotikch        ###   ########.fr       */
+/*   Updated: 2021/06/19 14:27:40 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct	s_dynarray
 	uint64_t	nb_cells;
 	uint64_t	byte_size;
 }				t_dynarray;
-
+//
 int		init_dynarray(t_dynarray *dynarray, uint64_t nb_cells, size_t cell_size);
 void	clear_dynarray(t_dynarray *dynarray);
 void	free_dynarray(t_dynarray *dynarray);
