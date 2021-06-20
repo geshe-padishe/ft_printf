@@ -6,29 +6,27 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/15 19:51:29 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/20 17:38:35 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "ft_printf.h"
 
 int main(int argc, char **argv)
 {
-	int ret;
-	int ret2;
-	conv whoopty;
+	int i;
+	int input[1];
 
-	dprintf(1, "my_printf: ");
-	ret = ft_printf(argv[1], "hi low");
-	printf("%%\n");
-	printf("rl_printf: ");
-	ret2 = printf(argv[1], "hi low");
-	printf("%%\n");
-	printf("my_printf: %d\n", ret);
-	printf("rl_printf: %d\n", ret2);
-	printf("--------------------------------------------------\n");
+	input[0] = 0;
+	i = 0;
+	printf("i = %d\n", i);
+	if (input[i++])
+	{
+		printf("i = %d\n", i++);
+		printf("i = %d\n", ++i);
+	}
+	printf("i = %d\n", i);
 //	dprintf(1, "my_printf: ");
 //	ret = ft_printf(argv[1], 1);
 //	printf("%%\n");
