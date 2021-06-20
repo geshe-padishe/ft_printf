@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/15 20:00:45 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/20 16:41:10 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,26 @@ conv def_type(conv whoopty, va_list *ap)
 	return (whoopty);
 }
 
+void conv_bridge2(conv whoopty)
+{
+	if (whoopty.conversion == 's')
+	{
+		if (whoopty.flags[2] == 0)
+			draw_field(whoopty, -1, 0);
+		charput(whoopty.string, ft_small_nb(ft_strlen(whoopty.string), whoopty.precision), 0);
+		if (whoopty.flags[2] == 1)
+			draw_field(whoopty, -1, 0);
+	}
+	else if (whoopty.conversion == 'c')
+	{
+		if (whoopty.flags[2] == 0)
+			draw_field(whoopty, -1, 0);
+		charput(&whoopty.character, 1, 0);
+		if (whoopty.flags[2] == 1)
+			draw_field(whoopty, -1, 0);
+	}
+}
+
 void conv_bridge(conv whoopty, char c)
 {
 	if (whoopty.conversion == 0 && c)
@@ -87,22 +107,7 @@ void conv_bridge(conv whoopty, char c)
 		whoopty.flags[0] = 1;
 		print_nb(1, 16, whoopty);
 	}
-	else if (whoopty.conversion == 's')
-	{
-		if (whoopty.flags[2] == 0)
-			draw_field(whoopty, -1, 0);
-		charput(whoopty.string, ft_small_nb(ft_strlen(whoopty.string), whoopty.precision), 0);
-		if (whoopty.flags[2] == 1)
-			draw_field(whoopty, -1, 0);
-	}
-	else if (whoopty.conversion == 'c')
-	{
-		if (whoopty.flags[2] == 0)
-			draw_field(whoopty, -1, 0);
-		charput(&whoopty.character, 1, 0);
-		if (whoopty.flags[2] == 1)
-			draw_field(whoopty, -1, 0);
-	}
+	conv_bridge2(whoopty);
 }
 
 void flag_peacemaker(bool *flags)
@@ -111,6 +116,29 @@ void flag_peacemaker(bool *flags)
 		flags[1] = 0;
 	if (flags[4] == 1)
 		flags[3] = 0;
+}
+
+int converter(const char *input, conv *whoopty, int i, va_list *ap)
+{
+	i++;
+	ft_bzero(whoopty, sizeof(*whoopty));
+	whoopty->precision = -1;
+	i += ft_printf_parse(whoopty, input + i, ap);
+	if (whoopty->fld_wdt < 0)
+	{
+		whoopty->fld_wdt *= -1;
+		whoopty->flags[2] = 1;
+	}
+	flag_peacemaker(whoopty->flags);
+	*whoopty = def_type(*whoopty, ap);
+	if (input[i] && whoopty->conversion == 0 && whoopty->flags[2] == 1 && (i = i + 1))
+	{
+		charput((char*)&input[i - 1], 1, 0);
+		conv_bridge(*whoopty, input[i - 1]);
+	}
+	else
+		conv_bridge(*whoopty, input[i]);
+	return (i);
 }
 
 int ft_printf(const char *input, ...)
@@ -136,78 +164,8 @@ int ft_printf(const char *input, ...)
 		else if (input[i + 1] == 0)
 			return (charput("%", 1, 0));
 		else
-		{
-			//printf("|| input[%d] = %c ||\n", i, input[i]);
-			i++;
-			ft_bzero(&whoopty, sizeof(whoopty));
-			whoopty.precision = -1;
-			//printf("i = %d\n", i);
-			i += ft_printf_parse(&whoopty, input + i, &ap);
-			//printf("i = %d\n", i);
-			if (whoopty.fld_wdt < 0)
-			{
-				whoopty.fld_wdt *= -1;
-				whoopty.flags[2] = 1;
-			}
-			flag_peacemaker(whoopty.flags);
-			whoopty = def_type(whoopty, &ap);
-			if (input[i] && whoopty.conversion == 0 && whoopty.flags[2] == 1 && (i = i + 1))
-			{
-				charput((char*)&input[i - 1], 1, 0);
-				conv_bridge(whoopty, input[i - 1]);
-			}
-			else
-				conv_bridge(whoopty, input[i]);
-			//print_conv(whoopty);
-			//printf("|| input[%d] = %c ||\n", i, input[i]);
-		}
+			i = converter(input, &whoopty, i, &ap);
 	}
 	va_end(ap);
 	return (charput(NULL, 0, 0));
 }
-
-//void test_fct(conv *whoopty, int arg_ct, ...)
-//{
-//	va_list ap;
-//
-//	va_start(ap, arg_ct);
-//	whoopty->lnglng = va_arg(ap, int);
-//	printf("arg.lnglng = %lld\n", whoopty->lnglng);
-//	whoopty->lnglng = va_arg(ap, int);
-//	printf("arg.lnglng = %lld\n", whoopty->lnglng);
-//	whoopty->lnglng = va_arg(ap, long);
-//	printf("arg.lnglng = %lld\n", whoopty->lnglng);
-//	va_end(ap);
-//}
-
-//int main(int argc, char **argv)
-//{
-//	int integer;
-//	long long longteger;
-//	short shorteger;
-////	int conv_len = 0;
-//
-//	(void)argc;
-////	conv_len = sizeof(conversion);
-//	shorteger = 32332;
-//	longteger = 321432144324231;
-//	integer = 1232132231;
-////	(void)argc;
-////	conversion.precision = atoi(argv[2]);
-////	dprintf(1, "str: ");
-////	printf("%s\n", argv[1]);
-////	dprintf(1, "\nchar: ");
-////	ft_putchar(argv[1][0]);
-////	printf("\nstring with 0 precision: ");
-////	printf("%.s\n", "ggsdafew");
-////
-////	test_fct(&conversion, 1, shorteger, integer, longteger);
-////	ft_printf(argv[1], argv[2], ft_atoi(argv[3]), ft_atoi(argv[4]));
-////	printf("%%\n");
-////	ft_printf(argv[1], atoi(argv[2]));
-////	printf("%%\n");
-//	printf(argv[1], atoi(argv[2]));
-//	printf("%%\n");
-////	printf("return :%d\n", printf("%s\n", argv[1]));
-//	return (0);
-//}
