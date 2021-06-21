@@ -6,25 +6,11 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/20 18:31:01 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/21 12:10:56 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-void	add_flag(char flag, bool *flags)
-{
-	if (flag == '#')
-		flags[0] = 1;
-	if (flag == '0')
-		flags[1] = 1;
-	if (flag == '-')
-		flags[2] = 1;
-	if (flag == '+')
-		flags[3] = 1;
-	if (flag == ' ')
-		flags[4] = 1;
-}
 
 int	flag_parse(const char *input, bool *flags)
 {
@@ -34,7 +20,16 @@ int	flag_parse(const char *input, bool *flags)
 	while (input[i] == '0' || input[i] == '#' || input[i] == '-'
 		|| input[i] == '+' || input[i] == ' ')
 	{
-		add_flag(input[i], flags);
+		if (input[i] == '#')
+			flags[0] = 1;
+		if (input[i] == '0')
+			flags[1] = 1;
+		if (input[i] == '-')
+			flags[2] = 1;
+		if (input[i] == '+')
+			flags[3] = 1;
+		if (input[i] == ' ')
+			flags[4] = 1;
 		i++;
 	}
 	return (i);
@@ -59,7 +54,16 @@ int	conv_parse(const char *input, conv *whoopty)
 
 int	ft_printf_parse2(conv *whoopty, const char *input, va_list *ap, int i)
 {
-
+	i++;
+	if (input[i] == '*' && input[i++] == '*')
+		whoopty->precision = va_arg(*ap, int);
+	else if (input[i] >= 48 && input[i] <= 57)
+		whoopty->precision = ft_atoi(&input[i]);
+	else
+		whoopty->precision = 0;
+	while (input[i] >= 48 && input[i] <= 57)
+		i++;
+	return (i);
 }
 
 int	ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
@@ -80,21 +84,12 @@ int	ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
 		else if (input[i] == '*' && input[i++] == '*')
 			whoopty->fld_wdt = va_arg(*ap, int);
 		else if (input[i] == '.')
-		{
-			i++;
-			if (input[i] == '*' && input[i++] == '*')
-				whoopty->precision = va_arg(*ap, int);
-			else if (input[i] >= 48 && input[i] <= 57)
-				whoopty->precision = ft_atoi(&input[i]);
-			else
-				whoopty->precision = 0;
-			while (input[i] >= 48 && input[i] <= 57)
-				i++;
-		}
-		else if (conv_parse(input + i, whoopty) && conv_parse(input + i++, whoopty))
+			i = ft_printf_parse2(whoopty, input, ap, i);
+		else if (conv_parse(input + i, whoopty)
+			&& conv_parse(input + i++, whoopty))
 			return (i);
 		else
 			return (i);
 	}
 	return (i);
-
+}

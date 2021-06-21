@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/16 17:38:06 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/21 12:47:30 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include "ft_printf.h"
 
-int ft_small_nb(int nb1, int nb2)
+int	ft_small_nb(int nb1, int nb2)
 {
 	if (nb1 < 0)
 		return (nb2);
@@ -27,36 +27,44 @@ int ft_small_nb(int nb1, int nb2)
 	return (nb2);
 }
 
-int nb_digites(long long nb, int base)
+int	nb_digites(long long nb, int base)
 {
-	int nb_digits;
+	int	nb_digits;
 
 	nb_digits = 1;
-	while ((nb = nb / base) > 0)
+	nb = nb / base;
+	while (nb > 0)
+	{
+		nb = nb / base;
 		nb_digits++;
+	}
 	return (nb_digits);
 }
 
-int nb_undigites(unsigned long nb)
+int	nb_undigites(unsigned long nb)
 {
-	int nb_digits;
+	int	nb_digits;
 
 	nb_digits = 1;
-	while ((nb = nb / 16) > 0)
+	nb = nb / 16;
+	while (nb > 0)
+	{
+		nb = nb / 16;
 		nb_digits++;
+	}
 	return (nb_digits);
 }
 
-long long abs_value(long long nb)
+long long	abs_value(long long nb)
 {
 	if (nb < 0)
 		return (-nb);
 	return (nb);
 }
 
-void write_digits(long long nb, int base)
+void	write_digits(long long nb, int base)
 {
-	int abs_base;
+	int	abs_base;
 
 	abs_base = base;
 	if (base < 0)
@@ -70,17 +78,17 @@ void write_digits(long long nb, int base)
 	else if (base == 8)
 		charput(&"01234567"[nb % 8], 1, 0);
 	else
-	   charput(&"0123456789"[nb % 10], 1, 0);
+		charput(&"0123456789"[nb % 10], 1, 0);
 }
 
-void write_undigits(unsigned long nb)
+void	write_undigits(unsigned long nb)
 {
 	if (nb >= 16)
 		write_undigits(nb / 16);
 	charput(&"0123456789abcdef"[nb % 16], 1, 0);
 }
 
-void print_nb_options(bool *flags, int base, long long nb)
+void	print_nb_options(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
@@ -101,7 +109,7 @@ void print_nb_options(bool *flags, int base, long long nb)
 	}
 }
 
-int options_length(bool *flags, int base, long long nb)
+int	options_length(bool *flags, int base, long long nb)
 {
 	if (base == 16)
 		if (flags[0] == 1)
@@ -131,7 +139,7 @@ int options_length(bool *flags, int base, long long nb)
 	return (0);
 }
 
-void draw_field(conv whoopty, int nb_digits, int options_length)
+void	draw_field(conv whoopty, int nb_digits, int options_length)
 {
 	if (whoopty.conversion == 0)
 		whoopty.precision = 1;
@@ -151,13 +159,13 @@ void draw_field(conv whoopty, int nb_digits, int options_length)
 		whoopty.fld_wdt--;
 	}
 }
-//BEFORE PRINT_NB PUT PRECISION TO NB_DIGITS+1
-void print_nb(long long nb, int base, conv whoopty)
+
+void	print_nb(long long nb, int base, conv whoopty)
 {
-	long long nb_s;
-	int nb_digits;
-	int abs_base;
-	int precision;
+	long long	nb_s;
+	int			nb_digits;
+	int			abs_base;
+	int			precision;
 
 	precision = whoopty.precision;
 	abs_base = abs_value(base);

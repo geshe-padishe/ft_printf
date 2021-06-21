@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/20 17:40:47 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/21 11:51:50 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <stdarg.h>
 #include "ft_printf.h"
 
-int		charput(char *character, int nb_char, bool reset)
+int	charput(char *character, int nb_char, bool reset)
 {
 	static int	ret = 0;
 
@@ -103,7 +103,7 @@ void	flag_peacemaker(bool *flags)
 		flags[3] = 0;
 }
 
-int		converter(const char *input, conv *whoopty, int i, va_list *ap)
+int	converter(const char *input, conv *whoopty, int i, va_list *ap)
 {
 	i++;
 	ft_bzero(whoopty, sizeof(*whoopty));
@@ -127,7 +127,7 @@ int		converter(const char *input, conv *whoopty, int i, va_list *ap)
 	return (i);
 }
 
-int		ft_printf(const char *input, ...)
+int	ft_printf(const char *input, ...)
 {
 	va_list			ap;
 	int				i;

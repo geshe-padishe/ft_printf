@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 15:28:06 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/20 18:02:29 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/21 12:07:33 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct	conv
 }				conv;
 
 void draw_field(conv whoopty, int nb_digits, int options_length);
-void add_flag(char flag, bool *flags);
 int flag_parse(const char *input, bool *flags);
 int len_modif(const char *input, char *len_mod);
 char ft_convr_parse(const char *input, conv *whoopty);
