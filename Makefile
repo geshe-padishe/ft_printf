@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/06/24 18:37:12 by nikotikch         #+#    #+#              #
+#    Updated: 2021/06/24 18:37:19 by nikotikch        ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME			= libftprintf.a
 
 CC				= gcc
@@ -7,7 +19,9 @@ RM				= rm -f
 AR				= ar rcs
 
 SRC_D			= srcs
-SRCS_LIST		= ft_printf.c ft_printf_nb.c ft_printf_parse.c
+SRCS_LIST		= ft_printf.c ft_printf_nb.c ft_printf_parse.c \
+                  ft_printf_nb_utils.c ft_printf_utils.c
+
 SRC_C			= $(addprefix ${SRC_D}/, ${SRCS_LIST})
 
 INC_D			= includes

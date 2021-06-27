@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:48 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/21 12:10:56 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/24 18:45:27 by nikotikch        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	flag_parse(const char *input, bool *flags)
 	return (i);
 }
 
-int	conv_parse(const char *input, conv *whoopty)
+int	conv_parse(const char *input, s_conv *whoopty)
 {
 	int	j;
 
@@ -52,7 +52,7 @@ int	conv_parse(const char *input, conv *whoopty)
 	return (0);
 }
 
-int	ft_printf_parse2(conv *whoopty, const char *input, va_list *ap, int i)
+int	ft_printf_parse2(s_conv *whoopty, const char *input, va_list *ap, int i)
 {
 	i++;
 	if (input[i] == '*' && input[i++] == '*')
@@ -66,7 +66,7 @@ int	ft_printf_parse2(conv *whoopty, const char *input, va_list *ap, int i)
 	return (i);
 }
 
-int	ft_printf_parse(conv *whoopty, const char *input, va_list *ap)
+int	ft_printf_parse(s_conv *whoopty, const char *input, va_list *ap)
 {
 	int	i;
 
