@@ -6,7 +6,7 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 15:40:34 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/24 18:45:26 by nikotikch        ###   ########.fr       */
+/*   Updated: 2021/06/27 18:03:32 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	options_length(bool *flags, int base, long long nb)
 	return (0);
 }
 
-void	print_nb2(long long nb, int base, s_conv whoopty, int nb_digits)
+void	print_nb2(long long nb, int base, t_conv whoopty, int nb_digits)
 {
 	long long	nb_s;
 
@@ -81,7 +81,7 @@ void	print_nb2(long long nb, int base, s_conv whoopty, int nb_digits)
 		draw_field(whoopty, nb_digits, options_length(whoopty.flags, base, nb));
 }
 
-void	print_nb(long long nb, int base, s_conv whoopty)
+void	print_nb(long long nb, int base, t_conv whoopty)
 {
 	long long	nb_s;
 	int			nb_digits;

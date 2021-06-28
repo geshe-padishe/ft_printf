@@ -6,13 +6,13 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 16:07:53 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/24 18:47:04 by nikotikch        ###   ########.fr       */
+/*   Updated: 2021/06/28 05:32:19 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	draw_field(s_conv whoopty, int nb_digits, int options_length)
+void	draw_field(t_conv whoopty, int nb_digits, int options_length)
 {
 	int	precision;
 
@@ -38,7 +38,7 @@ void	draw_field(s_conv whoopty, int nb_digits, int options_length)
 	}
 }
 
-void	conv_bridge2(s_conv whoopty)
+void	conv_bridge2(t_conv whoopty)
 {
 	if (whoopty.conversion == 's')
 	{
@@ -59,7 +59,7 @@ void	conv_bridge2(s_conv whoopty)
 	}
 }
 
-void	conv_bridge(s_conv whoopty, char c)
+void	conv_bridge(t_conv whoopty, char c)
 {
 	if (whoopty.conversion == 0 && c)
 		draw_field(whoopty, 0, 0);
@@ -81,11 +81,8 @@ void	conv_bridge(s_conv whoopty, char c)
 	conv_bridge2(whoopty);
 }
 
-int	converter(const char *input, s_conv *whoopty, int i, va_list *ap)
+int	converter(const char *input, t_conv *whoopty, int i, va_list *ap)
 {
-	i++;
-	ft_bzero(whoopty, sizeof(*whoopty));
-	whoopty->precision = -1;
 	i += ft_printf_parse(whoopty, input + i, ap);
 	if (whoopty->fld_wdt < 0)
 	{
@@ -105,6 +102,11 @@ int	converter(const char *input, s_conv *whoopty, int i, va_list *ap)
 	}
 	else
 		conv_bridge(*whoopty, input[i]);
+	if (input[i] == '%' && whoopty->conversion == 0 && whoopty->flags[2] == 0)
+	{
+		i++;
+		charput((char *)&input[i - 1], 1, 0);
+	}
 	return (i);
 }
 
@@ -112,13 +114,15 @@ int	ft_printf(const char *input, ...)
 {
 	va_list			ap;
 	int				i;
-	s_conv			whoopty;
+	t_conv			whoopty;
 
 	i = 0;
 	va_start(ap, input);
 	charput(NULL, 0, 1);
 	while (input && input[i])
 	{
+		ft_bzero(&whoopty, sizeof(whoopty));
+		whoopty.precision = -1;
 		if (input[i] != '%')
 			charput((char *)&input[i++], 1, 0);
 		else if (input[i + 1] == '%')
@@ -127,9 +131,9 @@ int	ft_printf(const char *input, ...)
 			i += 2;
 		}
 		else if (input[i + 1] == 0)
-			return (charput("%", 1, 0));
+			return (charput(NULL, 0, 0));
 		else
-			i = converter(input, &whoopty, i, &ap);
+			i = converter(input, &whoopty, i + 1, &ap);
 	}
 	va_end(ap);
 	return (charput(NULL, 0, 0));

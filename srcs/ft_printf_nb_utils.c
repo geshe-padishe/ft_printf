@@ -6,7 +6,7 @@
 /*   By: nikotikcho <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 18:37:17 by nikotikch         #+#    #+#             */
-/*   Updated: 2021/06/24 18:48:06 by nikotikch        ###   ########.fr       */
+/*   Updated: 2021/06/27 18:03:32 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	charput(char *character, int nb_char, bool reset)
 	return (ret);
 }
 
-s_conv	def_type(s_conv whoopty, va_list *ap)
+t_conv	def_type(t_conv whoopty, va_list *ap)
 {
 	if (whoopty.conversion == 'd' || whoopty.conversion == 'i')
 		whoopty.lnglng = va_arg(*ap, int);

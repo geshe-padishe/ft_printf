@@ -6,27 +6,24 @@
 /*   By: ngenadie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/24 17:08:29 by ngenadie          #+#    #+#             */
-/*   Updated: 2021/06/20 17:38:35 by ngenadie         ###   ########.fr       */
+/*   Updated: 2021/06/28 05:00:45 by ngenadie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "ft_printf.h"
 
 int main(int argc, char **argv)
 {
 	int i;
-	int input[1];
 
-	input[0] = 0;
 	i = 0;
-	printf("i = %d\n", i);
-	if (input[i++])
-	{
-		printf("i = %d\n", i++);
-		printf("i = %d\n", ++i);
-	}
-	printf("i = %d\n", i);
+	printf(argv[1], 'c');
+	printf("\n");
+	ft_printf(argv[1], 'c');
+	printf("\n");
+
 //	dprintf(1, "my_printf: ");
 //	ret = ft_printf(argv[1], 1);
 //	printf("%%\n");
